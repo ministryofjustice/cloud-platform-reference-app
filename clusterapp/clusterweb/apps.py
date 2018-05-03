@@ -2,6 +2,6 @@ from django.apps import AppConfig
 from django.utils.translation import gettext_lazy as _
 
 
-class MojAppConfig(AppConfig):
-    name = 'moj_app'
+class ClusterwebConfig(AppConfig):
+    name = 'clusterweb'
     verbose_name = _('GOV.UK Template')
