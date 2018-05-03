@@ -25,7 +25,9 @@ SECRET_KEY = 'd^2sg(rd9&3s$uj46-di0i_14bcy84x$lxsjt)d0ur_h!q*_!w'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+'demo.apps.cloud-platforms-test.k8s.integration.dsd.io',
+]
 
 
 # Application definition
