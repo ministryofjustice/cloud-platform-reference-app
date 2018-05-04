@@ -19,11 +19,13 @@
  
 Running in {{ osname|default:"don't know" }} <br/>
 
-{% load render_table from django_tables2 %}
-{% render_table table %}
+<table>
+ <tr><th>name</th><th>status</th></tr>
+ {% for p in profiles %}
+   <tr><td>{{p.name}}</td><td>{{p.status}}</td></tr>
+ {% endfor %}
+</table>
 
-{% load crispy_forms_tags %}
-{% crispy form %}
 
 <footer class="footer">
   <div class="footer__licence">
