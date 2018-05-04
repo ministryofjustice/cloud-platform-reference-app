@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
 'demo.apps.cloud-platforms-test.k8s.integration.dsd.io',
+'127.0.0.1'
 ]
 
 
