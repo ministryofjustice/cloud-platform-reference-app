@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'govuk_template_base',
-    'clusterweb',
+    'django-reference-app',
 ]
 
 MIDDLEWARE = [
@@ -53,7 +53,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'clusterapp.urls'
+ROOT_URLCONF = 'django-ref-config.urls'
 
 TEMPLATES = [
     {
@@ -72,7 +72,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'clusterapp.wsgi.application'
+WSGI_APPLICATION = 'django-ref-config.wsgi.application'
 
 
 # Database
