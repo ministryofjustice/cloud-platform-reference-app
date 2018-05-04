@@ -1,1 +1,1 @@
-default_app_config = 'clusterweb.apps.ClusterwebConfig'
+default_app_config = 'django-reference-app.apps.ClusterwebConfig'

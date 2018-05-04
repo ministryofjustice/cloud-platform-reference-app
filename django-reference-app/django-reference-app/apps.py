@@ -3,5 +3,5 @@ from django.utils.translation import gettext_lazy as _
 
 
 class ClusterwebConfig(AppConfig):
-    name = 'clusterweb'
+    name = 'django-reference-app'
     verbose_name = _('GOV.UK Template')
