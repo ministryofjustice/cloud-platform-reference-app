@@ -6,4 +6,4 @@ WORKDIR $PROJECT_ROOT
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 COPY . .
-CMD python3 clusterapp/manage.py runserver 0.0.0.0:8000
+CMD python3 django-reference-app/manage.py runserver 0.0.0.0:8000
