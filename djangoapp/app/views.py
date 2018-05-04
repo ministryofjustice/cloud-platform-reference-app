@@ -1,6 +1,5 @@
 import os, platform, configparser
 from django.shortcuts import render
-from .forms import ProfileForm
 from .models import ProfilesTable
 from django_tables2 import RequestConfig
 import boto3
@@ -49,4 +48,4 @@ def index(request):
       profiles.append(dict(p))
       table = ProfilesTable(profiles)
   RequestConfig(request).configure(table)
-  return render(request, 'index.html', {'osname':osname, 'form':ProfileForm(), 'table':table})
+  return render(request, 'index.html', {'osname':osname, 'table':table})
