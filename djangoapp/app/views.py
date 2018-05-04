@@ -49,4 +49,4 @@ def index(request):
       profiles.append(dict(p))
       table = ProfilesTable(profiles)
   RequestConfig(request).configure(table)
-  return render(request, 'index.html', {'osname':osname, 'form':ProfileForm(), 'table':table})
+  return render(request, 'index.html', {'osname':osname, 'table':table})
