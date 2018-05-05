@@ -26,7 +26,9 @@ SECRET_KEY = 'd^2sg(rd9&3s$uj46-di0i_14bcy84x$lxsjt)d0ur_h!q*_!w'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-'*',
+    'demo.apps.cloud-platforms-test.k8s.integration.dsd.io',
+    '127.0.0.1',
+    'localhost',
 ]
 
 
