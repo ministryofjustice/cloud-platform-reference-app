@@ -5,18 +5,6 @@
 *.pyc
 *.pyo
 
-# Common IDEs
-*.swp
-.idea/
-.buildpath
-.project
-.settings
-atlassian-ide-plugin.xml
-
-# Project
-/{{ project_name }}/local_settings.py
-/{{ project_name }}/public/static
-/{{ project_name }}/public/media
-
-# Project database
+# db
 *.db
+db.sqlite*
