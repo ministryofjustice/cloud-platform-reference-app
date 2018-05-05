@@ -7,16 +7,23 @@ Getting started guide: https://ministryofjustice.github.io/cloud-platform-user-d
 
 The cluster you'll be using for this exercise is the cloud-platform-non-prod cluster.
 
+## Table of contents
+   * [Installation with kubectl](#installing-with-kubectl)
+   * [Developing and building the app locally](#local-development)
+   * [Building, tagging and pushing to ECR](#pushing-to-ecr)
+
 ## Installing with kubectl
 There are many ways to deploying applications to the MoJ Cloud Platform, the below will show the simplist; kubectl.
 
 ### Prerequisites
-**• Install kubectl**
+* Install kubectl
 ```brew install kubectl```
-**• Authenticate**
+
+* Authenticate
 Gain access to the non-production cluster by authenticating with your GitHub account. Use the instructions here:
 ---- add-link ----
-**• Create namespace**
+
+* Create namespace
 Follow the instructions here to create a namespace on the cloud-platform-non-prod cluster: https://ministryofjustice.github.io/cloud-platform-user-docs/cloud-platform/env-create/#creating-a-cloud-platform-environment
 
 ### TL;DR
@@ -40,9 +47,12 @@ $ kubectl get pods -n <namespace> # you should have nothing running
 ```
 ## Local development
 ### Prerequisites
-**• python >= 3.6**
-**• pip**
-**• virtualenv (optional)**
+* python >= 3.6
+
+* pip
+
+* virtualenv (optional)
+
 ### Installation
 
 #### Creating the environment
@@ -66,8 +76,9 @@ Create a virtual python environment for the project. If you're not using virtual
 Open browser to [http://127.0.0.1:8000](http://127.0.0.1:8000)
 ## Pushing to ECR
 ### Prerequisites
-**• Docker**
-**• AWS CLI**
+* Docker
+
+* AWS CLI
 
 The decision was made to use the Amazon Elastic Container Registry. ECR is a fully-managed [Docker](https://aws.amazon.com/docker/) container registry that makes it easy for developers to store, manage, and deploy Docker container images.
 
@@ -75,18 +86,24 @@ A repository has been created on the AWS account *'mojds-platform-integrations'*
 
 ### Building, tagging and pushing to ECR
 1) Retrieve the `docker login` command that you can use to authenticate your Docker client to your registry:
+
 ```aws ecr get-login --no-include-email --region eu-west-1```
 
 2) Run the `docker login` command that was returned in the previous step.
 
 3) Build your Docker image using the following command.
+
 ```docker build -t cloud-platform-demo-app .```
 
 4) After the build completes, tag your image so you can push the image to this repository:
+
 ```docker tag cloud-platform-demo-app:latest 926803513772.dkr.ecr.eu-west-1.amazonaws.com/cloud-platform-demo-app:latest```
 
 5) Run the following command to push this image to your newly created AWS repository:
+
 ```docker push 926803513772.dkr.ecr.eu-west-1.amazonaws.com/cloud-platform-demo-app:latest```
+
+## To do;
  - [ ] Add full instructions on how to deploy app.
  - [ ] Add links for missing docs
  - [ ] Add postgres manifest
