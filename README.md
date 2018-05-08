@@ -11,6 +11,9 @@ The cluster you'll be using for this exercise is the cloud-platform-non-prod clu
    * [Installation with kubectl](#installing-with-kubectl)
    * [Developing and building the app locally](#local-development)
    * [Building, tagging and pushing to ECR](#pushing-to-ecr)
+   * [Creating a Cloud Platform Enviroment](#app-deploy)
+   * [Deploying with Helm](#helm-deploy)
+
 
 ## Installing with kubectl
 There are many ways to deploying applications to the MoJ Cloud Platform, the below will show the simplist; kubectl.
@@ -109,5 +112,3 @@ A repository has been created on the AWS account *'mojds-platform-integrations'*
  - [ ] Add postgres manifest
  - [ ] Add Helm Chart for Django app + postgres
  - [ ] Document postgres deployment and helm chart addition
-
-
