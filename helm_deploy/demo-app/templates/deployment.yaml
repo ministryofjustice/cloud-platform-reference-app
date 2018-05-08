@@ -1,16 +1,16 @@
-iapiVersion: extensions/v1beta1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: django-reference-app
   labels:
     app: django-reference-app
-# spec:
+spec:
   replicas: 1
   selector:
     matchLabels:
       app: django-reference-app-pod
   template:
-    # metadata:
+    metadata:
       labels:
         app: django-reference-app-pod
     spec:
