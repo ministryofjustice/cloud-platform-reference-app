@@ -1,0 +1,7 @@
+FROM python:3-slim
+COPY djangoapp /app
+WORKDIR /app
+RUN pip3 install -r /app/requirements.txt
+EXPOSE 8000
+CMD ["/usr/local/bin/python3", "/app/manage.py", "runserver"]
+

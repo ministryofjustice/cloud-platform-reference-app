@@ -8,4 +8,8 @@ Requirements:
    ```$ pip3 install --upgrade pip```
    ```$ pip3 install -r requirements.txt```
 Exec:
-```./manage.py runserver```
+ * directly ```./manage.py runserver```
+ * Docker:
+   * in the parent folder, ```$ docker build -t djangoapp -f Dockerfile-djangoapp .```
+   * ```$ docker run -d --rm -p8000:8000 djangoapp```
+   * ```$ curl http://localhost:8000```
