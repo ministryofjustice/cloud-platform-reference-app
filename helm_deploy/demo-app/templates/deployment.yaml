@@ -1,21 +1,21 @@
-apiVersion: extensions/v1beta1
+iapiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: django
+  name: django-reference-app
   labels:
-    app: django
-spec:
+    app: django-reference-app
+# spec:
   replicas: 1
   selector:
     matchLabels:
-      app: django-container
+      app: django-reference-app-pod
   template:
-    metadata:
+    # metadata:
       labels:
-        app: django-container
+        app: django-reference-app-pod
     spec:
       containers:
         - name: django
-          image: 926803513772.dkr.ecr.eu-west-1.amazonaws.com/cloud-platform-demo-app:latest
+          image: {{ .Values.image }}
           ports:
             - containerPort: 8000
