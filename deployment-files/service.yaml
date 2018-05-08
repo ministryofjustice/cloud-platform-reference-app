@@ -2,12 +2,11 @@ kind: Service
 apiVersion: v1
 metadata:
   name: django-app-demo-svc
-  labels:
-    app: django-app-demo-svc
 spec:
-  ports:
-  - port: 8000
-    name: http
-    targetPort: 8000
   selector:
     app: django-demo-app
+  ports:
+  - protocol: TCP
+    port: 8000
+    targetPort: 8000
+  type: NodePort
