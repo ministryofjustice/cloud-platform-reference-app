@@ -1,3 +1,4 @@
-# Default values for demo-app.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
+image:
+  repository: 926803513772.dkr.ecr.eu-west-1.amazonaws.com/cloud-platform-demo-app
+  tag: latest
+  pullPolicy: IfNotPresent
