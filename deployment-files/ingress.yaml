@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: django-demo-app-ing
+spec:
+  rules:
+  - host: django.apps.cloud-platforms-test.k8s.integration.dsd.io
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: django-demo-app-svc
+          servicePort: 8000
