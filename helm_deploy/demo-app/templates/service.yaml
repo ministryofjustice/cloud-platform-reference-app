@@ -1,10 +1,10 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: django-service
+  name: django-reference-app-service
 spec:
   selector:
-    app: django-container
+    app: django-reference-app-pod
   ports:
   - protocol: TCP
     port: 8000
