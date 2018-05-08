@@ -1,2 +1,2 @@
-Django==2.0
-django-govuk-template
+Django==2.0.5
+django-govuk-template==0.7
