@@ -1,7 +1,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: django-app-demo-svc
+  name: django-demo-app-svc
 spec:
   selector:
     app: django-demo-app
