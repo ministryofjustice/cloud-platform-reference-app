@@ -13,7 +13,7 @@ spec:
     metadata:
       labels:
         app: django-container
-   	spec:
+    spec:
       containers:
         - name: django
           image: 926803513772.dkr.ecr.eu-west-1.amazonaws.com/cloud-platform-demo-app:latest
@@ -24,3 +24,8 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: djangosecret
+                  key: secretKey
