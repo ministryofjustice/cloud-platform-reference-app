@@ -26,11 +26,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '')
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'demo.apps.cloud-platforms-test.k8s.integration.dsd.io',
-    '127.0.0.1',
-    'localhost',
+  os.environ.get('SERVER_IP', '127.0.0.1'),
+  os.environ.get('SERVER_HOSTNAME', 'localhost'),
 ]
-
 
 # Application definition
 
