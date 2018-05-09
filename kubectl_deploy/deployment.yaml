@@ -29,3 +29,5 @@ spec:
                 secretKeyRef:
                   name: djangosecret
                   key: secretKey
+            - name: DOMAIN_NAME
+              value: .k8s.integration.dsd.io
