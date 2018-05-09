@@ -12,7 +12,7 @@ spec:
   ports:
     - port: {{ .Values.service.port }}
       protocol: TCP
-      name: wh-svc-port
+      name: app-svc-port
   selector:
     app: {{ template "django-demo-app.name" . }}
     release: {{ .Release.Name }}

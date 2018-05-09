@@ -27,6 +27,17 @@ spec:
             - name: app-cont-port
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+          env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: demosecret
+                  key: thekey
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: demosecret
+                  key: thesecret
           livenessProbe:
             httpGet:
               path: /
@@ -35,5 +46,5 @@ spec:
             httpGet:
               path: /
               port: {{ .Values.service.port }}
-          resources:
+          resources:       
 {{ toYaml .Values.resources | indent 12 }}
