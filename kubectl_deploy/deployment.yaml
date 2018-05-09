@@ -13,9 +13,14 @@ spec:
     metadata:
       labels:
         app: django-container
-    spec:
+   	spec:
       containers:
         - name: django
           image: 926803513772.dkr.ecr.eu-west-1.amazonaws.com/cloud-platform-demo-app:latest
           ports:
             - containerPort: 8000
+          env:
+            - name: SERVER_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
