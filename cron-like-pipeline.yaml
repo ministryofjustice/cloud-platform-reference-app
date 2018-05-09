@@ -1,7 +1,9 @@
 resources:
 - name: 5m
   type: time
-  source: {interval: 5m}
+  check_every: 1m
+  source:
+    interval: 5m
 - name: app-source
   type: git
   source:
@@ -15,7 +17,7 @@ jobs:
   - get: 5m
     trigger: true
   - task: check-secrets
-    config: 
+    config:
       platform: linux
       inputs:
         - name: app-source
@@ -31,3 +33,4 @@ jobs:
           - |
             echo "hello world"
             ls
+
