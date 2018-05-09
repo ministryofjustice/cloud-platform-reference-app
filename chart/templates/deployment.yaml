@@ -31,13 +31,13 @@ spec:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
-                  name: demosecret
-                  key: thekey
+                  name: {{ .Values.env.name }}
+                  key: {{ .Values.env.data.accesskey }}
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
-                  name: demosecret
-                  key: thesecret
+                  name: {{ .Values.env.name }}
+                  key: {{ .Values.env.data.secretkey }}
           livenessProbe:
             httpGet:
               path: /
