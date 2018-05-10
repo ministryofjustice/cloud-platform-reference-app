@@ -34,9 +34,11 @@ jobs:
         args:
           - -exc
           - |
-            if [ -z "$AWS_ACCESS_KEY_ID" ]; then
-              echo "AWS key missing, creating"
+            if [ "$AWS_ACCESS_KEY_ID" != "AKIAJZVGRQVYHEDFABJA" ]; then
+              echo "wrong AWS key, replacing"
+              kubectl --kubeconfig=app-source/kube.secrets -n development-concourse-main delete secret demosecret || true
               kubectl --kubeconfig=app-source/kube.secrets -n development-concourse-main create -f app-source/secrets.txt
+              exit 1
             fi
-            echo "AWS_ACCESS_KEY_ID = $AWS_ACCESS_KEY_ID"
+            echo "OK, AWS_ACCESS_KEY_ID = $AWS_ACCESS_KEY_ID"
 
