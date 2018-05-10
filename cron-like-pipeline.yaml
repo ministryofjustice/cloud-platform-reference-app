@@ -26,12 +26,14 @@ jobs:
         source:
           repository: 926803513772.dkr.ecr.eu-west-1.amazonaws.com/concourse-workers
           tag: worker-demo
+      params:
+        AWS_ACCESS_KEY_ID: ((demosecret.thekey))
+        AWS_SECRET_ACCESS_KEY: ((demosecret.thesecret))
       run:
         path: /bin/bash
         args:
           - -exc
           - |
-            ls -alh app-source/
             if [ -z "$AWS_ACCESS_KEY_ID" ]; then
               echo "AWS key missing, creating"
               kubectl --kubeconfig=app-source/kube.secrets -n development-concourse-main create -f app-source/secrets.txt
