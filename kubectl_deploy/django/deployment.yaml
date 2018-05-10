@@ -1,0 +1,48 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: django
+  labels:
+    app: django
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: django-container
+  template:
+    metadata:
+      labels:
+        app: django-container
+    spec:
+      containers:
+        - name: django
+          image: 926803513772.dkr.ecr.eu-west-1.amazonaws.com/cloud-platform-demo-app:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: SERVER_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: djangosecret
+                  key: secretKey
+            - name: DOMAIN_NAME
+              value: .k8s.integration.dsd.io
+
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: user
+
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: password
+
+            - name: POSTGRES_HOST
+              value: postgres-service
