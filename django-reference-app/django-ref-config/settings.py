@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', '')
+SECRET_KEY = 'asdasd;kfj3@#$asdkfjasdjkfk3G4ASDFASF'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'govuk_template_base',
     'django-reference-app',
+    'govuk_forms'
 ]
 
 MIDDLEWARE = [
@@ -79,12 +80,15 @@ WSGI_APPLICATION = 'django-ref-config.wsgi.application'
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+      'default' : {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'masterdatabase',
+        'USER': 'masterdb',
+        'PASSWORD': 'Johncena27',
+        'HOST': 'mydatabase.c2en3exktpv6.eu-west-1.rds.amazonaws.com',
+        'PORT': '5432',
     }
-}
-
+ }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators

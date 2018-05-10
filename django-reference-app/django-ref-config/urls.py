@@ -17,7 +17,9 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
 from django.views.generic import TemplateView
+from govuk_template_base.views import showform
 
 urlpatterns = [
    url(r'^$', TemplateView.as_view(template_name='clusterweb.html')),
+   url(r'^clusterweb',showform)
 ]
