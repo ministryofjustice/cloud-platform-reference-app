@@ -8,11 +8,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: django-container
+      app: django-reference
   template:
     metadata:
       labels:
-        app: django-container
+        app: django-reference
     spec:
       containers:
         - name: django
