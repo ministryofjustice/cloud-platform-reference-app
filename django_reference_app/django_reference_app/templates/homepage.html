@@ -75,20 +75,28 @@
       <h2 style="font-size:24px;font-weight:400;line-height:1.25;color: #6f777b">Congratulations, You have Successfully Deployed The Kubernetes example app </h1>
       <br>
       <br>
-      <h2 style="font-size:24px;font-weight:600;line-height:1.25;">Getting started with the Cloud Platform</h2> 
-      <br>
-      <p>This app will give information on the new cloud platform solution</p>
-      <p>These are the follwoing repos and resources you will need to use the new platform</p>
-      <ul style="list-style:circle;padding-left:10px">
-        <li><a href="https://kubernetes.io/">Kubernetes documentation</a></li>
-        <li><a href="https://github.com/ministryofjustice/k8s-nonprod-environments">Non-production cluster repo</a></li>
-      </ul>
-      <br>
-      <br>
-      <h2 style="font-size:24px;font-weight:600;line-height:1.25;">Deploy the app with helm</h2>
-      <br>
-      <p>This is instructions on how to deploy an app via helm. Helm is a package manager for Kubernetes</p>
-      <a href="https://helm.sh/">Helm package manager</a>
+      <h2 style="font-size:24px;font-weight:600;line-height:1.25;">Getting started with the Cloud Platform</h2>
+      <p>Please enter your Name and Job Role</p> 
+      <!--
+      <form action="clusterweb.html" method="get">
+      -->
+      <form action="clusterwebtwo.html" method="post"> {%  csrf_token  %}
+        <label style="font-size: 20px;line-height: 1.25;font-weight: 600;">Name</label><br>
+        <input type="text" name="name" size="25" maxlength="99" data-val-length-max="99"><br>
+        <br>
+        <label style="font-size: 20px;line-height: 1.25;font-weight: 600;">Job Role</label><br>
+        <input type="text" name="job" size="25" maxlength="99" data-val-length-max="99"><br>
+        <!--
+        <select name="job role" class="csr_form_control"><br>
+            <option value="developer">Developer</option>
+            <option value="product">Product Manager</option>
+            <option value="other">Other</option>
+          </select><br>
+        -->
+          <br>
+          {% include "govuk_forms/submit-button.html" %}
+        
+      </form>
 
 
 

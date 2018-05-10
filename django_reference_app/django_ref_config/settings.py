@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'govuk_template_base',
     'django_reference_app',
+    'govuk_forms'
 ]
 
 MIDDLEWARE = [
