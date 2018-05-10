@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
   os.environ.get('SERVER_IP', '127.0.0.1'),
-  os.environ.get('DOMAIN_NAME', 'localhost'),
+  os.environ.get('SERVER_NAME', 'localhost'),
 ]
 
 # Application definition
@@ -77,6 +77,18 @@ WSGI_APPLICATION = 'django-ref-config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'kubernetes_django',
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'HOST': os.getenv('POSTGRES_HOST'),
+        'PORT': os.getenv('POSTGRES_PORT', 5432)
+
+     }
+}
 
 DATABASES = {
     'default': {
