@@ -8,11 +8,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: django-reference
+      app: django-ref-app
   template:
     metadata:
       labels:
-        app: django-reference
+        app: django-ref-app
     spec:
       containers:
         - name: django
@@ -20,15 +20,12 @@ spec:
           ports:
             - containerPort: 8000
           env:
-            - name: SERVER_IP
-              valueFrom:
-                fieldRef:
-                  fieldPath: status.podIP
             - name: SECRET_KEY
               valueFrom:
                 secretKeyRef:
                   name: djangosecret
                   key: secretKey
+
             - name: SERVER_NAME
               value: demo.apps.cloud-platforms-test.k8s.integration.dsd.io
 
