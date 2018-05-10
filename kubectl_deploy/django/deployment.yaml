@@ -45,4 +45,4 @@ spec:
                   key: password
 
             - name: POSTGRES_HOST
-              value: postgres-service
+              value: django-postgres
