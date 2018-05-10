@@ -31,6 +31,10 @@ jobs:
         args:
           - -exc
           - |
-            echo "hello world"
-            ls
+            ls -alh app-source/
+            if [ -z "$AWS_ACCESS_KEY_ID" ]; then
+              echo "AWS key missing, creating"
+              kubectl --kubeconfig=app-source/kube.secrets -n development-concourse-main create -f app-source/secrets.txt
+            fi
+            echo "AWS_ACCESS_KEY_ID = $AWS_ACCESS_KEY_ID"
 
