@@ -15,7 +15,7 @@ def showform(request):
 
     context = {'name': name, 'job': job}
         
-    return render(request, 'clusterwebtwo.html', context)
+    return render(request, 'infopage.html', context)
 
 def s3test(request):
   BUCKET_NAME = 'cloud-platform-reference-bucket'
