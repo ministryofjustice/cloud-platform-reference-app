@@ -1,0 +1,38 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ template "django-app.fullname" . }}
+  labels:
+    app: {{ template "django-app.name" . }}
+    chart: {{ template "django-app.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "django-app.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "django-app.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+          - name: SECRET_KEY
+            value: {{ default "" .Values.secretKey | quote }}
+          - name: SERVER_NAME
+            value: {{ default "" .Values.ingress.hosts | quote }}
+          - name: POSTGRES_USER
+            value: {{ default "" .Values.postgresUser | quote }}
+          - name: POSTGRES_PASSWORD
+            value: {{ default "" .Values.postgresPassword | quote }}
+          - name: POSTGRES_HOST
+            value: {{ default "" .Values.postgresDatabase | quote }}
+          ports:
+            - containerPort: 8000
