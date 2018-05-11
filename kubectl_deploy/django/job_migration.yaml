@@ -1,34 +1,15 @@
-apiVersion: extensions/v1beta1
-kind: Deployment
+apiVersion: batch/v1
+kind: Job
 metadata:
-  name: django
-  labels:
-    app: django
+  name: django-migrations
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: django-ref-app
   template:
-    metadata:
-      labels:
-        app: django-ref-app
     spec:
       containers:
         - name: django
           image: 926803513772.dkr.ecr.eu-west-1.amazonaws.com/cloud-platform-demo-app:latest
-          ports:
-            - containerPort: 8000
+          command: ["/bin/bash","-c","python3 django_reference_app/manage.py makemigrations django_reference_app && python3 django_reference_app/manage.py makemigrations govuk_template_base && python3 django_reference_app/manage.py migrate"]
           env:
-            - name: SECRET_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: djangosecret
-                  key: secretKey
-
-            - name: SERVER_NAME
-              value: demo.apps.cloud-platforms-test.k8s.integration.dsd.io
-
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
@@ -43,3 +24,5 @@ spec:
 
             - name: POSTGRES_HOST
               value: django-postgres
+      restartPolicy: OnFailure
+  backoffLimit: 5
