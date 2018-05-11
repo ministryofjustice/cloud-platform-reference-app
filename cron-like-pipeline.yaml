@@ -9,7 +9,7 @@ resources:
   source:
     uri: https://github.com/ministryofjustice/cloud-platform-reference-app
     branch: manual-app-deploy
-    git_crypt_key: (( ref-secret.ref-key ))
+    git_crypt_key: ((ref-secret.ref-key))
 jobs:
 - name: check-secrets-every-5m
   plan:
@@ -21,11 +21,11 @@ jobs:
       platform: linux
       inputs:
         - name: app-source
-#      image_resource: 
-#        type: docker-image
-#        source:
-#          repository: 926803513772.dkr.ecr.eu-west-1.amazonaws.com/concourse-workers
-#          tag: worker-demo
+      image_resource: 
+        type: docker-image
+        source:
+          repository: 926803513772.dkr.ecr.eu-west-1.amazonaws.com/concourse-workers
+          tag: worker-demo
       params:
         AWS_ACCESS_KEY_ID: ((demosecret.thekey))
         AWS_SECRET_ACCESS_KEY: ((demosecret.thesecret))
