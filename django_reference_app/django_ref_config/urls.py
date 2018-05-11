@@ -21,5 +21,5 @@ from django_reference_app.views import showform
 
 urlpatterns = [
    url(r'^$', TemplateView.as_view(template_name='homepage.html')),
-   url(r'^clusterweb', showform)
+   url(r'^infopage', showform)
 ]
