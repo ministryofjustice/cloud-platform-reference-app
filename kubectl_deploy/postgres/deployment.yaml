@@ -30,7 +30,7 @@ spec:
                   key: password
 
             - name: POSTGRES_DB
-              value: kubernetes_django
+              value: django_reference
 
           ports:
             - containerPort: 5432

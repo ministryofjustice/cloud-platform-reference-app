@@ -17,7 +17,10 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
 from django.views.generic import TemplateView
+from django_reference_app.views import showform,s3test
 
 urlpatterns = [
-   url(r'^$', TemplateView.as_view(template_name='clusterweb.html')),
+   url(r'^s3test$',s3test),
+   url(r'^$', TemplateView.as_view(template_name='homepage.html')),
+   url(r'^infopage', showform)
 ]

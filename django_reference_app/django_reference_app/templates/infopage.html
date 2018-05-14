@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load static %}
 {% load govuk_template_base %}
+{% load govuk_forms}
 
 {% block page_title %}{% get_service_settings as service_settings %}GOV.UK – {{ service_settings.localised_name }}{% endblock %}
 
@@ -13,6 +14,7 @@
     a[href^="/"]:after {
       content: " ({{ request.scheme }}://{{ request.get_host }}" attr(href) ")";
     }
+
    
   </style>
 {% endblock %}
@@ -77,7 +79,8 @@
       <br>
       <h2 style="font-size:24px;font-weight:600;line-height:1.25;">Getting started with the Cloud Platform</h2> 
       <br>
-      <p>This app will give information on the new cloud platform solution</p>
+      <h3>Hello {{ name }}</h3>
+      <p>This site will give information on the new cloud platform solution</p>
       <p>These are the follwoing repos and resources you will need to use the new platform</p>
       <ul style="list-style:circle;padding-left:10px">
         <li><a href="https://kubernetes.io/">Kubernetes documentation</a></li>
@@ -89,6 +92,7 @@
       <br>
       <p>This is instructions on how to deploy an app via helm. Helm is a package manager for Kubernetes</p>
       <a href="https://helm.sh/">Helm package manager</a>
+      
 
 
 
