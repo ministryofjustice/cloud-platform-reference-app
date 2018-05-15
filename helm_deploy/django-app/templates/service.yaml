@@ -8,11 +8,11 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
-  type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
+    - port: 8000
       targetPort: 8000
       protocol: TCP
+  type: NodePort
   selector:
     app: {{ template "django-app.name" . }}
     release: {{ .Release.Name }}

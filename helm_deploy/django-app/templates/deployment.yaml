@@ -33,6 +33,9 @@ spec:
           - name: POSTGRES_PASSWORD
             value: {{ default "" .Values.postgresPassword | quote }}
           - name: POSTGRES_HOST
-            value: {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}
+            value: {{ printf "%s-%s" .Release.Name "postgresql" | trunc 63 | trimSuffix "-" }}
+          - name: DB_NAME
+            value: "{{ .Values.postgresql.postgresDatabase }}"
           ports:
             - containerPort: 8000
+              name: http
