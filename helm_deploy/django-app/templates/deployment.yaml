@@ -44,4 +44,4 @@ spec:
             value: {{ .Values.postgresql.postgresDatabase }}
           ports:
             - containerPort: 8000
-              name: http
+      
