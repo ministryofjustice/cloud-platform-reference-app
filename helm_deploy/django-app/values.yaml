@@ -24,13 +24,12 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
-secretKey: afsndfjksdjfsjkdhfjksdhfjshfk
-postgresUser: postgres
-postgresPassword: postgres
-postgresDatabase: django_reference
+
+deploy:
+    secretKey: afsndfjksdjfsjkdhfjksdhfjshfk
 
 postgresql:
-    postgresUser: "postgres"
-    postgresPassword: "postgres"
+    postgresUser: "django"
+    postgresPassword: ""
     postgresDatabase: "django_reference"
-    postgresHost: "django_reference"
+    postgresHost: ""

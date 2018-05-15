@@ -25,17 +25,23 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
           - name: SECRET_KEY
-            value: {{ default "" .Values.secretKey | quote }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "django-app.fullname" . }}
+                key: secretKey
           - name: SERVER_NAME
             value: {{ default "" .Values.ingress.hosts | quote }}
           - name: POSTGRES_USER
-            value: {{ default "" .Values.postgresUser | quote }}
+            value: {{ default "" .Values.postgresql.postgresUser }}
           - name: POSTGRES_PASSWORD
-            value: {{ default "" .Values.postgresPassword | quote }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ printf "%s-%s" .Release.Name "postgresql" | trunc 63 | trimSuffix "-" }}
+                key: postgres-password
           - name: POSTGRES_HOST
             value: {{ printf "%s-%s" .Release.Name "postgresql" | trunc 63 | trimSuffix "-" }}
           - name: DB_NAME
-            value: "{{ .Values.postgresql.postgresDatabase }}"
+            value: {{ .Values.postgresql.postgresDatabase }}
           ports:
             - containerPort: 8000
               name: http
