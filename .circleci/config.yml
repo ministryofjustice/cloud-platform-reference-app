@@ -45,11 +45,11 @@ jobs:
       - deploy:
           name: Push application Docker image
           command: |
-            # if [ "${CIRCLE_BRANCH}" == "master" ]; then
-            login="$(aws ecr get-login)"
-            ${login}
-            # create="${aws ecr create repository --repository-name ${CIRCLE_PROJECT_REPONAME}}"
-            # ${create}
-            docker tag app "926803513772.dkr.ecr.eu-west-1.amazonaws.com/cloud-platform-reference-app2:${CIRCLE_SHA1}"
-            docker push "926803513772.dkr.ecr.eu-west-1.amazonaws.com/cloud-platform-reference-app2:${CIRCLE_SHA1}"
-            # fi
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              login="$(aws ecr get-login)"
+              ${login}
+              # create="${aws ecr create repository --repository-name ${CIRCLE_PROJECT_REPONAME}}"
+              # ${create}
+              docker tag app "926803513772.dkr.ecr.eu-west-1.amazonaws.com/cloud-platform-reference-app2:${CIRCLE_SHA1}"
+              docker push "926803513772.dkr.ecr.eu-west-1.amazonaws.com/cloud-platform-reference-app2:${CIRCLE_SHA1}"
+            fi
