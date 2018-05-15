@@ -29,13 +29,17 @@ spec:
           - name: SERVER_NAME
             value: {{ default "" .Values.ingress.hosts | quote }}
           - name: POSTGRES_USER
-            value: {{ default "" .Values.postgresUser | quote }}
+            valueFrom:
+              secretKeyRef:
+               name: postgres-secrets
+               key: postgres-user
           - name: POSTGRES_PASSWORD
-            value: {{ default "" .Values.postgresPassword | quote }}
+            valueFrom:
+              secretKeyRef:
+               name: postgres-secrets
+               key: postgres-password
           - name: POSTGRES_HOST
-            value: {{ printf "%s-%s" .Release.Name "postgresql" | trunc 63 | trimSuffix "-" }}
-          - name: DB_NAME
-            value: "{{ .Values.postgresql.postgresDatabase }}"
+            value: {{ default "" .Values.postgresDatabase | quote }}
           ports:
             - containerPort: 8000
-              name: http
+      

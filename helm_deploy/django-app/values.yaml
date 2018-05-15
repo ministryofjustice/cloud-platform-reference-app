@@ -7,9 +7,10 @@ replicaCount: 1
 image:
   repository: 926803513772.dkr.ecr.eu-west-1.amazonaws.com/cloud-platform-demo-app
   tag: latest
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
 
 service:
+  type: ClusterIP
   port: 80
 
 ingress:
@@ -19,18 +20,10 @@ ingress:
     # kubernetes.io/tls-acme: "true"
   path: /
   hosts:
-    - helm-install.apps.cloud-platforms-test.k8s.integration.dsd.io
+    - demo.apps.cloud-platforms-test.k8s.integration.dsd.io
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
-secretKey: afsndfjksdjfsjkdhfjksdhfjshfk
-postgresUser: postgres
-postgresPassword: postgres
-postgresDatabase: django_reference
-
-postgresql:
-    postgresUser: "postgres"
-    postgresPassword: "postgres"
-    postgresDatabase: "django_reference"
-    postgresHost: "django_reference"
+postgresDatabase: "django_reference"
+secretKey: XXXXXXXXXXXXXXXXXXXX
