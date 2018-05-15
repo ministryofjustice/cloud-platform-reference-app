@@ -10,7 +10,6 @@ image:
   pullPolicy: Always
 
 service:
-  type: ClusterIP
   port: 80
 
 ingress:
@@ -28,11 +27,10 @@ ingress:
 secretKey: afsndfjksdjfsjkdhfjksdhfjshfk
 postgresUser: postgres
 postgresPassword: postgres
-postgresDatabase: kubernetes_django
+postgresDatabase: django_reference
 
 postgresql:
-  nameOverride: django-postgres
-
-service:
-  type: ClusterIP
-  port: 5432
+    postgresUser: "postgres"
+    postgresPassword: "postgres"
+    postgresDatabase: "django_reference"
+    postgresHost: "django_reference"
