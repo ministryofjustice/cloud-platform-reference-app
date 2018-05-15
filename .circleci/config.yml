@@ -48,6 +48,7 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               login="$(aws ecr get-login)"
               ${login}
-              docker tag app "${ECR_ENDPOINT}/app:${CIRCLE_SHA1}"
-              docker push "${ECR_ENDPOINT}/app:${CIRCLE_SHA1}"
+              ${create repository --repository-name ${CIRCLE_PROJECT_REPONAME}}
+              docker tag app "${ECR_ENDPOINT}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
+              docker push "${ECR_ENDPOINT}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
             fi
