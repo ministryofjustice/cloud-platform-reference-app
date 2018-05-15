@@ -50,6 +50,6 @@ jobs:
             ${login}
             # create="${aws ecr create repository --repository-name ${CIRCLE_PROJECT_REPONAME}}"
             # ${create}
-            docker tag app aws_account_id.dkr.ecr.eu-west-1.amazon "${ECR_ENDPOINT}/cloud-platform-reference-app:${CIRCLE_SHA1}"
-            docker push aws_account_id.dkr.ecr.eu-west-1.amazon  "${ECR_ENDPOINT}/cloud-platform-reference-app:${CIRCLE_SHA1}"
+            docker tag app aws_account_id.dkr.ecr.eu-west-1.amazonaws.com/"${ECR_ENDPOINT}/cloud-platform-reference-app:${CIRCLE_SHA1}"
+            docker push aws_account_id.dkr.ecr.eu-west-1.amazonaws.com/"${ECR_ENDPOINT}/cloud-platform-reference-app:${CIRCLE_SHA1}"
             # fi
