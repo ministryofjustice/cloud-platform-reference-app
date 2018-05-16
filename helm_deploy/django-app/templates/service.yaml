@@ -12,7 +12,7 @@ spec:
     - port: 8000
       targetPort: 8000
       protocol: TCP
-  type: NodePort
+  type: ClusterIP
   selector:
     app: {{ template "django-app.name" . }}
     release: {{ .Release.Name }}
