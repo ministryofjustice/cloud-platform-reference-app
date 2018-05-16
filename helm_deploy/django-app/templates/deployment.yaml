@@ -32,7 +32,10 @@ spec:
           - name: SERVER_NAME
             value: {{ default "" .Values.ingress.hosts | quote }}
           - name: POSTGRES_USER
-            value: {{ default "" .Values.postgresql.postgresUser }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "django-app.fullname" . }}
+                key: postgresUser
           - name: POSTGRES_PASSWORD
             valueFrom:
               secretKeyRef:
