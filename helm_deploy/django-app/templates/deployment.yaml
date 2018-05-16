@@ -43,7 +43,7 @@ spec:
                 key: postgres-password
           - name: POSTGRES_HOST
             value: {{ printf "%s-%s" .Release.Name "postgresql" | trunc 63 | trimSuffix "-" }}
-          - name: DB_NAME
+          - name: POSTGRES_DATABASE
             value: {{ .Values.postgresql.postgresDatabase }}
           ports:
             - containerPort: 8000
