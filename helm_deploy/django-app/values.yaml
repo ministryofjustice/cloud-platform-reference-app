@@ -25,10 +25,12 @@ ingress:
   #      - chart-example.local
 
 deploy: 
-  host: helm-demo.apps.cloud-platforms-test.k8s.integration.dsd.io
+  hosts: helm-demo.apps.cloud-platforms-test.k8s.integration.dsd.io
 
 postgresql:
-    postgresUser: "django"
+    postgresUser: ""
     postgresPassword: ""
     postgresDatabase: "django_reference"
     postgresHost: ""
+    persistence:
+      enabled: false
