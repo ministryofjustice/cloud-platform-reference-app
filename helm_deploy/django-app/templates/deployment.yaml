@@ -24,13 +24,17 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
+          - name: SERVER_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
           - name: SECRET_KEY
             valueFrom:
               secretKeyRef:
                 name: {{ template "django-app.fullname" . }}
                 key: secretKey
           - name: SERVER_NAME
-            value: {{ default "" .Values.ingress.hosts | quote }}
+            value: {{ default "" .Values.deploy.hosts | quote }}
           - name: POSTGRES_USER
             valueFrom:
               secretKeyRef:
@@ -47,4 +51,9 @@ spec:
             value: {{ .Values.postgresql.postgresDatabase }}
           ports:
             - containerPort: 8000
-      
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 5
