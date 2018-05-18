@@ -4,4 +4,13 @@ services:
     build:
       context: .
     image: app
-    command: python3 django_reference_app/manage.py runserver 0.0.0.0:8000
+    command: ["./django_reference_app/wait_for_postgres.sh", "postgres", "--", "make", "apptest"]
+    links:
+      - postgres:postgres
+    environment:
+      - POSTGRES_PASSWORD=passw0rd
+  postgres:
+    image: "postgres:alpine"
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=passw0rd
