@@ -23,7 +23,7 @@ jobs:
             apk add --no-cache \
               make
             pip install \
-              docker-compose==1.12.0 \
+              docker-compose==1.21.2 \
               awscli==1.11.76 \
               flake8==3.5.0
       - run:
