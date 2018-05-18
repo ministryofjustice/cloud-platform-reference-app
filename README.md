@@ -77,6 +77,11 @@ Create a virtual python environment for the project. If you're not using virtual
 ```python django-reference-app/manage.py runserver```
 
 Open browser to [http://127.0.0.1:8000](http://127.0.0.1:8000)
+#### Running tests
+
+```python manage.py test```
+
+
 ## Pushing to ECR
 ### Prerequisites
 * Docker
