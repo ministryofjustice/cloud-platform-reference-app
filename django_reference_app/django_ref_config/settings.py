@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '')
 DEBUG = True
 
 ALLOWED_HOSTS = [
-  os.environ.get('SERVER_NAME', 'localhost'),
+    os.environ.get('SERVER_NAME', 'localhost'),
 ]
 
 # Application definition
@@ -87,7 +87,7 @@ DATABASES = {
         'HOST': os.getenv('POSTGRES_HOST'),
         'PORT': os.getenv('POSTGRES_PORT', 5432)
 
-     }
+    }
 }
 
 # Password validation
