@@ -25,7 +25,7 @@ ingress:
   #      - chart-example.local
 
 deploy: 
-  hosts: helm-demo.apps.cloud-platforms-test.k8s.integration.dsd.io
+  host: helm-demo.apps.cloud-platforms-test.k8s.integration.dsd.io
 
 postgresql:
     postgresUser: ""
