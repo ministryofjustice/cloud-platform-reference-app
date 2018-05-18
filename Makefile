@@ -8,7 +8,7 @@ test: codetest apptest
 
 codetest:
 	@echo "~> Checking codestyle"
-	flake8 --count django_reference_app
+	flake8 --ignore=F401 --count django_reference_app
 
 apptest:
 	@echo "~> Running app tests"
