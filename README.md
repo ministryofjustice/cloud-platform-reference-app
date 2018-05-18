@@ -70,17 +70,23 @@ Create a virtual python environment for the project. If you're not using virtual
 
 #### Install requirements
 
-```cd {{ project_name }}```
+This step also creates githooks which will run all the necessary tests before allowing to commit.
+
+```make prepare```
+
+If installation of githooks isn't necessary you can run
+
+```cd django_reference_app```
 ```pip install -r requirements.txt```
+
 #### Running
 
-```python django-reference-app/manage.py runserver```
+```python django_reference_app/manage.py runserver```
 
 Open browser to [http://127.0.0.1:8000](http://127.0.0.1:8000)
 #### Running tests
 
-```python manage.py test```
-
+```make test```
 
 ## Pushing to ECR
 ### Prerequisites
