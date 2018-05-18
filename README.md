@@ -76,7 +76,6 @@ This step also creates githooks which will run all the necessary tests before al
 
 If installation of githooks isn't necessary you can run
 
-```cd django_reference_app```
 ```pip install -r requirements.txt```
 
 #### Running
