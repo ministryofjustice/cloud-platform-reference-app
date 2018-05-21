@@ -1,15 +1,16 @@
 version: '3'
 services:
-  web:
-    restart: always
-    build: ./web
-    expose:
-      - "8000"
+  app:
+    build:
+      context: .
+    image: app
+    command: ["./django_reference_app/wait_for_postgres.sh", "postgres", "--", "make", "apptest"]
     links:
       - postgres:postgres
-    env_file: env
-    volumes:
-      - ./web:/data/web
-    command: /usr/bin/gunicorn mydjango.wsgi:application -w 2 -b :8000
+    environment:
+      - POSTGRES_PASSWORD=passw0rd
   postgres:
-    image: "postgres"
+    image: "postgres:alpine"
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=passw0rd
