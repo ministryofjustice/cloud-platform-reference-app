@@ -1,13 +1,13 @@
 import os
 import platform
 from django.shortcuts import render
-from .modelforms import tableForms
+from .modelforms import PersonForm
 import boto3
 import botocore
 
 
 def showform(request):
-    form = tableForms(request.POST or None)
+    form = PersonForm(request.POST or None)
     if form.is_valid():
         form.save()
     # name = request.GET['name']
