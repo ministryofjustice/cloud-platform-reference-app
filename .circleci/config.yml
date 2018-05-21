@@ -12,15 +12,30 @@ jobs:
           command: |
             apk update
             apk upgrade
+            apk add openssl
             apk add curl
             curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
             chmod +x kubectl
             mv ./kubectl /usr/local/bin/kubectl
+            curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get > get_helm.sh
+            chmod 700 get_helm.sh
+            sh get_helm.sh
+            kubectl
             apk add --no-cache \
               py-pip=9.0.0-r1
             pip install \
               docker-compose==1.12.0 \
               awscli==1.11.76
+      - run:
+          name: Authenticate with non-production cluster
+          command:
+            ${NON_PROD_CA_CERT} > ./ca.crt
+            kubectl config set-cluster ${NON_PROD_CLUSTER_NAME} --certificate-authority=./ca.crt --server=https://api.${NON_PROD_CLUSTER_NAME}
+            kubectl config set-credentials circleci --token=${NON_PROD_TOKEN}
+            kubectl config set-context ${NON_PROD_CLUSTER_NAME} --cluster=${NON_PROD_CLUSTER_NAME} --user=circleci --namespace=cloudplatforms-reference-app
+            kubectl config use-context ${NON_PROD_CLUSTER_NAME}
+            kubectl get deployments
+            helm init --tiller-namespace cloudplatforms-reference-app
       - run:
           name: Docker Build
           command:
