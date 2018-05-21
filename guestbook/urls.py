@@ -5,5 +5,5 @@ from guestbook.views import guestlist, s3test
 app_name = 'guestbook'
 urlpatterns = [
     path('s3test/', s3test, name='s3test'),
-    path('list/', guestlist, name='guestlist'),
+    path('', guestlist, name='guestlist'),
 ]
