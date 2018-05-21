@@ -9,7 +9,7 @@ class URLTests(TestCase):
         self.assertEqual(response.status_code, 200)
 
 
-class PersonTest(test.TestCase):
+class PersonTest(TestCase):
 
     def test_person_creation(self):
         person = Person.objects.create(name='test_user', job='test_job')
