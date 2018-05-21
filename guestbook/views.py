@@ -6,7 +6,7 @@ import boto3
 import botocore
 
 
-def showform(request):
+def guestlist(request):
     form = PersonForm(request.POST or None)
     if form.is_valid():
         form.save()
@@ -16,7 +16,7 @@ def showform(request):
 
     context = {'name': name, 'job': job}
 
-    return render(request, 'infopage.html', context)
+    return render(request, 'guestlist.html', context)
 
 
 def s3test(request):
