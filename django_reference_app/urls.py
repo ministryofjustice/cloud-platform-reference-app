@@ -18,7 +18,7 @@ Including another URLconf
 # from django.urls import path
 from django.conf.urls import url
 from django.views.generic import TemplateView
-from django_reference_app.views import showform, s3test
+from guestbook.views import showform, s3test
 
 urlpatterns = [
     url(r'^s3test$', s3test),

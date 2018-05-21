@@ -1,7 +1,7 @@
 import os
 import platform
 from django.shortcuts import render
-from django_reference_app.modelforms import tableForms
+from .modelforms import tableForms
 import boto3
 import botocore
 
