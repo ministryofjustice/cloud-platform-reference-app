@@ -14,6 +14,7 @@ def guestlist(request):
     
     name = request.POST['name']
     job = request.POST['job']
+        return redirect('guestbook:guestlist')
 
     context = {'name': name, 'job': job}
 
