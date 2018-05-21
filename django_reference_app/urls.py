@@ -13,17 +13,18 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-# Following have been commented out as they're not used:
-# from django.contrib import admin
-# from django.urls import path
-from django.conf.urls import url
+from django.urls import include, path
 from django.views.generic import TemplateView
-from guestbook.views import showform, s3test
+
+
+homepage_view = TemplateView.as_view(
+    template_name='homepage.html',
+    extra_context={
+        'label': 'Submit'
+    }
+)
 
 urlpatterns = [
-    url(r'^s3test$', s3test),
-    url(r'^$', TemplateView.as_view(
-        template_name='homepage.html',
-        extra_context={'label': 'Submit'})),
-    url(r'^infopage', showform)
+    path('', homepage_view, name='homepage'),
+    path('guestbook/', include('guestbook.urls', namespace='guestbook')),
 ]
