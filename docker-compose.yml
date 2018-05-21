@@ -9,6 +9,8 @@ services:
       - postgres
     environment:
       - POSTGRES_PASSWORD=passw0rd
+      - POSTGRES_USER=postgres
+      - POSTGRES_HOST=postgres
   postgres:
     image: "postgres:alpine"
     restart: always
