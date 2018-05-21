@@ -1,4 +1,4 @@
-version: '3'
+version: '3.5'
 services:
   app:
     build:
@@ -6,7 +6,7 @@ services:
     image: app
     command: ["./django_reference_app/wait_for_postgres.sh", "postgres", "--", "make", "apptest"]
     links:
-      - postgres:postgres
+      - postgres
     environment:
       - POSTGRES_PASSWORD=passw0rd
   postgres:
