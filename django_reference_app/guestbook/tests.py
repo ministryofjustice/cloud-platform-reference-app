@@ -1,3 +1,16 @@
 from django.test import TestCase
+from .models import Person
 
-# Create your tests here.
+
+class URLTests(TestCase):
+
+    def test_homepage(self):
+        response = self.client.get('/')
+        self.assertEqual(response.status_code, 200)
+
+
+class PersonTest(test.TestCase):
+
+    def test_person_creation(self):
+        person = Person.objects.create(name='test_user', job='test_job')
+        self.assertEqual(person.__str__(), person.name)
