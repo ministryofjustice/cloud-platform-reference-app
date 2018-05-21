@@ -11,7 +11,7 @@ def guestlist(request):
     if form.is_valid():
         form.save()
         redirect('guestbook:guestlist')
-    # name = request.GET['name']
+    
     name = request.POST['name']
     job = request.POST['job']
 

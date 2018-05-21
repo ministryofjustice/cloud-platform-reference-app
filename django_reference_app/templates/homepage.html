@@ -77,25 +77,15 @@
       <br>
       <h2 style="font-size:24px;font-weight:600;line-height:1.25;">Getting started with the Cloud Platform</h2>
       <p>Please enter your Name and Job Role</p> 
-      <!--
-      <form action="infopage.html" method="get">
-      -->
+
       <form action="{% url 'guestbook:guestlist' %}" method="post"> {%  csrf_token  %}
         <label style="font-size: 20px;line-height: 1.25;font-weight: 600;">Name</label><br>
         <input type="text" name="name" size="25" maxlength="99" data-val-length-max="99"><br>
         <br>
         <label style="font-size: 20px;line-height: 1.25;font-weight: 600;">Job Role</label><br>
         <input type="text" name="job" size="25" maxlength="99" data-val-length-max="99"><br>
-        <!--
-        <select name="job role" class="csr_form_control"><br>
-            <option value="developer">Developer</option>
-            <option value="product">Product Manager</option>
-            <option value="other">Other</option>
-          </select><br>
-        -->
-          <br>
-          {% include "govuk_forms/submit-button.html" %}
-        
+        <br>
+        {% include "govuk_forms/submit-button.html" %}
       </form>
 
 
