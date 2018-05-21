@@ -30,11 +30,17 @@ jobs:
           name: Authenticate with non-production cluster
           command: |
             echo ${NON_PROD_CA_CERT} > ./ca.crt
+            cat ./ca.crt
             kubectl config set-cluster ${NON_PROD_CLUSTER_NAME} --certificate-authority=./ca.crt --server=https://api.${NON_PROD_CLUSTER_NAME}
+            kubectl config view
             kubectl config set-credentials circleci --token=${NON_PROD_TOKEN}
+            kubectl config view
             kubectl config set-context ${NON_PROD_CLUSTER_NAME} --cluster=${NON_PROD_CLUSTER_NAME} --user=circleci --namespace=cloudplatforms-reference-app
+            kubectl config view
             kubectl config use-context ${NON_PROD_CLUSTER_NAME}
-            kubectl get deployments
+            kubectl config view
+            kubectl get nodes
+            kubectl config view
             helm init --tiller-namespace cloudplatforms-reference-app
       - run:
           name: Docker Build
