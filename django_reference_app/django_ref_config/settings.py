@@ -27,7 +27,6 @@ DEBUG = True
 ALLOWED_HOSTS = [
   os.environ.get('SERVER_IP', '127.0.0.1'),
   os.environ.get('SERVER_NAME', 'localhost'),
-
 ]
 
 # Application definition
