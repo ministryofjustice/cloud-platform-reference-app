@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'govuk_template_base',
-    'django_reference_app',
+    'guestbook',
     'govuk_forms'
 ]
 
