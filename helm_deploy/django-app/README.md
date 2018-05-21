@@ -26,7 +26,6 @@ To delete the installation from your cluster:
 helm del --purge <app-name>
 ```
 ## Configuration
-Additional parameters are available.
 | Parameter  | Description     | Default |
 | ---------- | --------------- | ------- |
 | `replicaCount` | Used to set the number of replica pods used. | `1` |
