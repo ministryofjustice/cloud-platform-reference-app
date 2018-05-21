@@ -22,6 +22,8 @@ from guestbook.views import showform, s3test
 
 urlpatterns = [
     url(r'^s3test$', s3test),
-    url(r'^$', TemplateView.as_view(template_name='homepage.html')),
+    url(r'^$', TemplateView.as_view(
+        template_name='homepage.html',
+        extra_context={'label': 'Submit'})),
     url(r'^infopage', showform)
 ]
