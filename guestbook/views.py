@@ -14,7 +14,7 @@ def guestlist(request):
         return redirect('guestbook:guestlist')
 
     context = {
-        'people': Person.objects.all(),
+        'people': Person.objects.order_by('-date_created'),
     }
 
     return render(request, 'guestlist.html', context)
