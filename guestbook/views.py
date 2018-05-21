@@ -1,6 +1,6 @@
 import os
 import platform
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .modelforms import PersonForm
 import boto3
 import botocore
@@ -10,6 +10,7 @@ def guestlist(request):
     form = PersonForm(request.POST or None)
     if form.is_valid():
         form.save()
+        redirect('guestbook:guestlist')
     # name = request.GET['name']
     name = request.POST['name']
     job = request.POST['job']
