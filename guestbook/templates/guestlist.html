@@ -70,7 +70,25 @@
 
     {% block inner_content %}
 
+    <h1 class="heading-xlarge">Guestbook</h1>
     <body>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Job</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for person in people %}
+          <tr>
+            <td>{{ person.name }}</td>
+            <td>{{ person.job }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
       <br>
       <h1 style="font-size:36px;font-weight:700;">Cloud Platforms Deployment</h1>
       <br>

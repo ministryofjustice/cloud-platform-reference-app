@@ -2,6 +2,7 @@ import os
 import platform
 from django.shortcuts import render, redirect
 from .modelforms import PersonForm
+from .models import Person
 import boto3
 import botocore
 
@@ -10,13 +11,11 @@ def guestlist(request):
     form = PersonForm(request.POST or None)
     if form.is_valid():
         form.save()
-        redirect('guestbook:guestlist')
-    
-    name = request.POST['name']
-    job = request.POST['job']
         return redirect('guestbook:guestlist')
 
-    context = {'name': name, 'job': job}
+    context = {
+        'people': Person.objects.all(),
+    }
 
     return render(request, 'guestlist.html', context)
 
