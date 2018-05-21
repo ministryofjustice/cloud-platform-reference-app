@@ -25,8 +25,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '')
 DEBUG = True
 
 ALLOWED_HOSTS = [
-  os.environ.get('SERVER_IP', '127.0.0.1'),
-  os.environ.get('SERVER_NAME', 'localhost'),
+    os.environ.get('SERVER_IP', '127.0.0.1'),
+    os.environ.get('SERVER_NAME', 'localhost'),
 ]
 
 # Application definition
@@ -86,11 +86,11 @@ DATABASES = {
         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
         'HOST': os.getenv('POSTGRES_HOST'),
         'PORT': os.getenv('POSTGRES_PORT', 5432),
-# Added connect_timeout to ensure the app exits if the database connection times out
+        # Added connect_timeout to ensure the app exits if the database connection times out
         'OPTIONS': {
             'connect_timeout': 5,
         }
-     }
+    }
 }
 
 # Password validation
