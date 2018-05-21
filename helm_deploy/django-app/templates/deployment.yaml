@@ -34,7 +34,7 @@ spec:
                 name: {{ template "django-app.fullname" . }}
                 key: secretKey
           - name: SERVER_NAME
-            value: {{ default "" .Values.deploy.host | quote }}
+            value: {{required "URL is required" .Values.deploy.host }}
           - name: POSTGRES_USER
             valueFrom:
               secretKeyRef:
