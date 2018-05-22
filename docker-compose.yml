@@ -4,6 +4,8 @@ services:
     build:
       context: .
     image: app
+    ports:
+      - "8000:8000"
     links:
       - postgres
     environment:
