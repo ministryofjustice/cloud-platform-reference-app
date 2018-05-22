@@ -49,7 +49,7 @@ jobs:
       - run:
           name: Authenticate with non-production cluster
           command: |
-            echo -n ${NON_PROD_CA_CERT} | base64 -D > ./ca.crt
+            echo -n ${NON_PROD_CA_CERT} | base64 -d > ./ca.crt
             #echo ${NON_PROD_CA_CERT} > ./encoded-ca.crt
             #base64 -d ./encoded-ca.crt > ./ca.crt
             kubectl config set-cluster ${NON_PROD_CLUSTER_NAME} --certificate-authority=./ca.crt --server=https://api.${NON_PROD_CLUSTER_NAME}
@@ -76,8 +76,8 @@ jobs:
             docker save -o /caches/app.tar app
       - save_cache:
           key: v1-{{ .Branch }}-{{ epoch }}
-          paths: 
-              - /caches/app.tar
+          paths:
+            - /caches/app.tar
       - run:
           name: Run docker tests
           command: |
@@ -85,9 +85,9 @@ jobs:
       - deploy:
           name: Push application Docker image
           command: |
-             if [ "${CIRCLE_BRANCH}" == "add/helm-circle" ]; then
+            if [ "${CIRCLE_BRANCH}" == "add/helm-circle" ]; then
               login="$(aws ecr get-login)"
               ${login}
               docker tag app "${ECR_ENDPOINT}/${CIRCLE_PROJECT_REPONAME}2:${CIRCLE_PROJECT_REPONAME}${CIRCLE_SHA1}"
               docker push "${ECR_ENDPOINT}/${CIRCLE_PROJECT_REPONAME}2:${CIRCLE_PROJECT_REPONAME}${CIRCLE_SHA1}"
-             fi
+            fi
