@@ -36,13 +36,13 @@ jobs:
           paths:
             - /caches/app.tar
       - run:
-          name: Docker Build
-          command:
-            docker build -t refapp .
-      - run:
           name: Run docker tests
           command: |
             docker-compose -f ./docker-compose.test.yml up
+      - run:
+          name: Docker Build
+          command:
+            docker build -t refapp .
       - deploy:
           name: Push application Docker image
           command: |
