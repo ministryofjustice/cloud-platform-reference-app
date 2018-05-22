@@ -36,7 +36,8 @@ jobs:
             kubectl config set-context ${NON_PROD_CLUSTER_NAME} --cluster=${NON_PROD_CLUSTER_NAME} --user=circleci --namespace=cloudplatforms-reference-app
             kubectl config use-context ${NON_PROD_CLUSTER_NAME}
             kubectl get pods
-            helm init --tiller-namespace cloudplatforms-reference-app
+            helm init --tiller-namespace cloudplatforms-reference-app --client-only
+            helm list --tiller-namespace cloudplatforms-reference-app
       - run:
           name: Docker Build
           command:
