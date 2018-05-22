@@ -8,17 +8,17 @@ test: codetest apptest
 
 codetest:
 	@echo "~> Checking codestyle"
-	flake8 --ignore=F401 --count django_reference_app
+	flake8 --ignore=F401 --count .
 
 apptest:
 	@echo "~> Running app tests"
-	cd django_reference_app && SECRET_KEY=randomSecretKeyForTesting python manage.py test
+	/usr/bin/env python3 manage.py test
 
 prepare:
 	# Following commands prepare developer environment adding appropriate githooks
 	@echo "~> Preparing environment"
 	# Please note that "@" supress output of commands.
-	@pip install --upgrade -r requirements.txt
+	@/usr/bin/env pip3 install --upgrade -r requirements.txt
 	# There are two ways to add githooks
 	# 1.
 	# @git config core.hooksPath .githooks

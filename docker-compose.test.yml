@@ -4,6 +4,7 @@ services:
     build:
       context: .
     image: app
+    command: /bin/sh -c "make codetest && make apptest"
     ports:
       - "8000:8000"
     links:
