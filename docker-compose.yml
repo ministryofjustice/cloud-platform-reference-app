@@ -8,6 +8,8 @@ services:
       - "8000:8000"
     links:
       - postgres
+    depends_on:
+      - postgres
     environment:
       - POSTGRES_PASSWORD=passw0rd
       - POSTGRES_USER=postgres
