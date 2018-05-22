@@ -69,7 +69,7 @@ jobs:
       - deploy:
           name: Push application Docker image
           command: |
-             if [ "${CIRCLE_BRANCH}" == "add/helm-circle" ]; then
+             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               login="$(aws ecr get-login)"
               ${login}
               docker tag app "${ECR_ENDPOINT}/${CIRCLE_PROJECT_REPONAME}2:${CIRCLE_PROJECT_REPONAME}${CIRCLE_SHA1}"
