@@ -41,7 +41,7 @@ jobs:
             kubectl config view
             kubectl config use-context ${NON_PROD_CLUSTER_NAME}
             kubectl config view
-            kubectl get nodes
+            kubectl get pods
             kubectl config view
             helm init --tiller-namespace cloudplatforms-reference-app
       - run:
