@@ -46,9 +46,10 @@ jobs:
       - deploy:
           name: Push application Docker image
           command: |
+            login="$(aws ecr get-login)"
+            ${login}
              if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              login="$(aws ecr get-login)"
-              ${login}
+
               docker tag refapp "${ECR_ENDPOINT}/${CIRCLE_PROJECT_REPONAME}:latest"
               docker push "${ECR_ENDPOINT}/${CIRCLE_PROJECT_REPONAME}:latest"
               docker tag refapp "${ECR_ENDPOINT}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
