@@ -4,7 +4,6 @@ services:
     build:
       context: .
     image: app
-    command: ["./django_reference_app/wait_for_postgres.sh", "postgres", "--", "make", "apptest"]
     links:
       - postgres
     environment:
