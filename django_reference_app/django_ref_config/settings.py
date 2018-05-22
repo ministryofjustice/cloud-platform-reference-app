@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/2.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
-
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -26,6 +25,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '')
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    os.environ.get('SERVER_IP', '127.0.0.1'),
     os.environ.get('SERVER_NAME', 'localhost'),
 ]
 
@@ -85,8 +85,11 @@ DATABASES = {
         'USER': os.getenv('POSTGRES_USER'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
         'HOST': os.getenv('POSTGRES_HOST'),
-        'PORT': os.getenv('POSTGRES_PORT', 5432)
-
+        'PORT': os.getenv('POSTGRES_PORT', 5432),
+        # Added connect_timeout to ensure the app exits if the database connection times out
+        'OPTIONS': {
+            'connect_timeout': 5,
+        }
     }
 }
 
