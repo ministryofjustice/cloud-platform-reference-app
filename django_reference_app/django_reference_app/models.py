@@ -2,8 +2,8 @@ from django.db import models
 
 
 class Person(models.Model):
-     name = models.CharField(max_length=30)
-     job = models.CharField(max_length=30)
+    name = models.CharField(max_length=30)
+    job = models.CharField(max_length=30)
 
-     def __str__(self):
+    def __str__(self):
         return self.name
