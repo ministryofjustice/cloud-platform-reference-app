@@ -45,14 +45,18 @@ jobs:
             docker build -t refapp .
       - deploy:
           name: Push application Docker image
+          environment:
+            # In order to have builds and images push working properly you should change
+            # following environment variable to your github team name slug.
+            GITHUB_TEAM_NAME_SLUG: cloud-platform
           command: |
             login="$(aws ecr get-login)"
             ${login}
 
-            docker tag refapp "${ECR_ENDPOINT}/cloud-platform/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
-            docker push "${ECR_ENDPOINT}/cloud-platform/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
+            docker tag refapp "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
+            docker push "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
 
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              docker tag "${ECR_ENDPOINT}/cloud-platform/${CIRCLE_PROJECT_REPONAME}:latest"
-              docker push "${ECR_ENDPOINT}/cloud-platform/${CIRCLE_PROJECT_REPONAME}:latest"
+              docker tag "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}:latest"
+              docker push "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}:latest"
             fi
