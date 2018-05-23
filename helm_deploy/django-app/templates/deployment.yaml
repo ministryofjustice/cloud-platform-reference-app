@@ -29,22 +29,13 @@ spec:
               fieldRef:
                 fieldPath: status.podIP
           - name: SECRET_KEY
-            valueFrom:
-              secretKeyRef:
-                name: {{ template "django-app.fullname" . }}
-                key: secretKey
+            value: {{ .Values.deploy.secretKey | quote }}
           - name: SERVER_NAME
             value: {{required "URL is required" .Values.deploy.host | quote }}
           - name: POSTGRES_USER
-            valueFrom:
-              secretKeyRef:
-                name: {{ template "django-app.fullname" . }}
-                key: postgresUser
+            value: {{ .Values.postgresql.postgresUser }}
           - name: POSTGRES_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: {{ printf "%s-%s" .Release.Name "postgresql" | trunc 63 | trimSuffix "-" }}
-                key: postgres-password
+            value: {{ .Values.postgresql.postgresPassword }}
           - name: POSTGRES_HOST
             value: {{ printf "%s-%s" .Release.Name "postgresql" | trunc 63 | trimSuffix "-" }}
           - name: POSTGRES_DATABASE
