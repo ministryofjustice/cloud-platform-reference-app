@@ -30,7 +30,7 @@ deploy:
 postgresql:
     postgresUser: ""
     postgresPassword: ""
-    postgresDatabase: "django_reference"
+    postgresDatabase: "django_reference_app"
     postgresHost: ""
     persistence:
       enabled: false
