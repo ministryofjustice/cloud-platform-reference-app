@@ -9,7 +9,7 @@ spec:
         - name: {{ template "django-app.fullname" . }}-db-migration
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: ["/bin/bash","-c","python3 django_reference_app/manage.py migrate"]
+          command: ["/bin/bash","-c","python3 manage.py migrate"]
           env:
             - name: POSTGRES_USER
               valueFrom:
