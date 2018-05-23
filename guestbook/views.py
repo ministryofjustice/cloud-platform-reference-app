@@ -1,22 +1,23 @@
 import os
 import platform
-from django.shortcuts import render
-from django_reference_app.modelforms import tableForms
+from django.shortcuts import render, redirect
+from .modelforms import PersonForm
+from .models import Person
 import boto3
 import botocore
 
 
-def showform(request):
-    form = tableForms(request.POST or None)
+def guestlist(request):
+    form = PersonForm(request.POST or None)
     if form.is_valid():
         form.save()
-    # name = request.GET['name']
-    name = request.POST['name']
-    job = request.POST['job']
+        return redirect('guestbook:guestlist')
 
-    context = {'name': name, 'job': job}
+    context = {
+        'people': Person.objects.order_by('-date_created'),
+    }
 
-    return render(request, 'infopage.html', context)
+    return render(request, 'guestlist.html', context)
 
 
 def s3test(request):

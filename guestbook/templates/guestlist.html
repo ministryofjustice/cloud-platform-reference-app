@@ -70,26 +70,37 @@
 
     {% block inner_content %}
 
+    <h1 class="heading-xlarge">Guestbook</h1>
     <body>
-      <br>
-      <h1 style="font-size:36px;font-weight:700;">Cloud Platforms Deployment</h1>
-      <br>
-      <h2 style="font-size:24px;font-weight:400;line-height:1.25;color: #6f777b">Congratulations, You have Successfully Deployed The Kubernetes example app </h1>
-      <br>
-      <br>
-      <h2 style="font-size:24px;font-weight:600;line-height:1.25;">Getting started with the Cloud Platform</h2> 
-      <br>
-      <h3>Hello {{ name }}</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Job</th>
+            <th>Visited</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for person in people %}
+          <tr>
+            <td>{{ person.name }}</td>
+            <td>{{ person.job }}</td>
+            <td>{{ person.date_created }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <h1 class="heading-xlarge">Cloud Platforms Deployment</h1>
+      <h2 class="heading-medium">Congratulations, You have Successfully Deployed The Kubernetes example app </h1>
+      <h2 class="heading-medium">Getting started with the Cloud Platform</h2> 
       <p>This site will give information on the new cloud platform solution</p>
       <p>These are the follwoing repos and resources you will need to use the new platform</p>
-      <ul style="list-style:circle;padding-left:10px">
+      <ul>
         <li><a href="https://kubernetes.io/">Kubernetes documentation</a></li>
         <li><a href="https://github.com/ministryofjustice/k8s-nonprod-environments">Non-production cluster repo</a></li>
       </ul>
-      <br>
-      <br>
-      <h2 style="font-size:24px;font-weight:600;line-height:1.25;">Deploy the app with helm</h2>
-      <br>
+      <h2 class="heading-medium">Deploy the app with helm</h2>
       <p>This is instructions on how to deploy an app via helm. Helm is a package manager for Kubernetes</p>
       <a href="https://helm.sh/">Helm package manager</a>
       

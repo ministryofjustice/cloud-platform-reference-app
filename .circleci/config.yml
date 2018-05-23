@@ -20,6 +20,16 @@ jobs:
       - run:
           name: Install dependencies
           command: |
+            apk update
+            apk upgrade
+            apk add openssl
+            apk add curl
+            curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+            chmod +x kubectl
+            mv ./kubectl /usr/local/bin/kubectl
+            curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get > get_helm.sh
+            chmod 700 get_helm.sh
+            sh get_helm.sh
             apk add --no-cache \
               make
             pip install \
@@ -36,13 +46,38 @@ jobs:
           paths:
             - /caches/app.tar
       - run:
+          name: Authenticate with non-production cluster
+          command: |
+            echo -n ${NON_PROD_CA_CERT} | base64 -d > ./ca.crt
+            kubectl config set-cluster ${NON_PROD_CLUSTER_NAME} --certificate-authority=./ca.crt --server=https://api.${NON_PROD_CLUSTER_NAME}
+            kubectl config set-credentials circleci --token=${NON_PROD_TOKEN}
+            kubectl config set-context ${NON_PROD_CLUSTER_NAME} --cluster=${NON_PROD_CLUSTER_NAME} --user=circleci --namespace=cloudplatforms-reference-app
+            kubectl config use-context ${NON_PROD_CLUSTER_NAME}
+            kubectl get pods
+            helm init --tiller-namespace cloudplatforms-reference-app --client-only
+            helm list --tiller-namespace cloudplatforms-reference-app
+      - run:
+          name: Load Docker image layer cache
+          command: |
+            set +o pipefail
+            docker load -i /caches/app.tar | true
+      - run:
+          name: Build application Docker image
+          command: |
+            docker build --cache-from=app -t app .
+      - run:
+          name: Save Docker image layer cache
+          command: |
+            mkdir -p /caches
+            docker save -o /caches/app.tar app
+      - save_cache:
+          key: v1-{{ .Branch }}-{{ epoch }}
+          paths:
+            - /caches/app.tar
+      - run:
           name: Run docker tests
           command: |
-            docker-compose up --abort-on-container-exit --quiet-pull --no-color --exit-code-from=app
-      - run:
-          name: Docker Build
-          command:
-            docker build -t refapp .
+            docker-compose -f docker-compose.test.yml up --abort-on-container-exit --quiet-pull --no-color --exit-code-from=app
       - deploy:
           name: Push application Docker image
           environment:
