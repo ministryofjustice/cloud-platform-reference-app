@@ -12,22 +12,13 @@ spec:
           command: ["/bin/bash","-c","python3 manage.py migrate"]
           env:
             - name: POSTGRES_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "django-app.fullname" . }}
-                  key: postgresUser
+              value: {{ .Values.postgresql.postgresUser }}
 
             - name: SECRET_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "django-app.fullname" . }}
-                  key: secretKey
+              value: {{ .Values.deploy.secretKey | quote }}
 
             - name: POSTGRES_PASSWORD
-              valueFrom:  
-                secretKeyRef:
-                  name: {{ printf "%s-%s" .Release.Name "postgresql" | trunc 63 | trimSuffix "-" }}
-                  key: postgres-password
+              value: {{ .Values.postgresql.postgresPassword }}
 
             - name: POSTGRES_HOST
               value: {{ printf "%s-%s" .Release.Name "postgresql" | trunc 63 | trimSuffix "-" }}
