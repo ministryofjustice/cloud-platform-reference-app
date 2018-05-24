@@ -29,17 +29,29 @@ spec:
               fieldRef:
                 fieldPath: status.podIP
           - name: SECRET_KEY
-            value: {{ .Values.deploy.secretKey | quote }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "django-app.fullname" . }}
+                key: secretKey
           - name: SERVER_NAME
             value: {{required "URL is required" .Values.deploy.host | quote }}
           - name: POSTGRES_USER
-            value: {{ .Values.postgresql.postgresUser }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "django-app.fullname" . }}
+                key: postgresUser
           - name: POSTGRES_PASSWORD
-            value: {{ .Values.postgresql.postgresPassword }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "django-app.fullname" . }}
+                key: postgresPassword
           - name: POSTGRES_HOST
             value: {{ printf "%s-%s" .Release.Name "postgresql" | trunc 63 | trimSuffix "-" }}
           - name: POSTGRES_DATABASE
-            value: {{ .Values.postgresql.postgresDatabase }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "django-app.fullname" . }}
+                key: postgresDatabase
           ports:
             - containerPort: 8000
           livenessProbe:
