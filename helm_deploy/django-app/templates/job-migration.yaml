@@ -24,11 +24,11 @@ spec:
                   key: secretKey
 
             - name: POSTGRES_PASSWORD
-              valueFrom:  
+              valueFrom:
                 secretKeyRef:
-                  name: {{ printf "%s-%s" .Release.Name "postgresql" | trunc 63 | trimSuffix "-" }}
-                  key: postgres-password
-
+                  name: {{ template "django-app.fullname" . }}
+                  key: postgresPassword
+                  
             - name: POSTGRES_HOST
               value: {{ printf "%s-%s" .Release.Name "postgresql" | trunc 63 | trimSuffix "-" }}
 

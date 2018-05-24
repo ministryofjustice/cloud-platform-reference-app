@@ -26,10 +26,11 @@ ingress:
 
 deploy: 
   host: ""
+  secretKey: "EdocGMybHpWR2hsVTJWamNtVjBTMlY1VG05MGFHbHVaMVJ2VTJWbFNHVnlaUzQ9"
 
 postgresql:
-    postgresUser: ""
-    postgresPassword: ""
+    postgresUser: "postgres"
+    postgresPassword: "hdjhfsjkdfgsghfjgshdfgsdfkhkjdf"
     postgresDatabase: "django_reference_app"
     postgresHost: ""
     persistence:

@@ -43,12 +43,15 @@ spec:
           - name: POSTGRES_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: {{ printf "%s-%s" .Release.Name "postgresql" | trunc 63 | trimSuffix "-" }}
-                key: postgres-password
+                name: {{ template "django-app.fullname" . }}
+                key: postgresPassword
           - name: POSTGRES_HOST
             value: {{ printf "%s-%s" .Release.Name "postgresql" | trunc 63 | trimSuffix "-" }}
           - name: POSTGRES_DATABASE
-            value: {{ .Values.postgresql.postgresDatabase }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "django-app.fullname" . }}
+                key: postgresDatabase
           ports:
             - containerPort: 8000
           livenessProbe:
