@@ -92,14 +92,14 @@ jobs:
             docker tag app "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
             docker push "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
 
-            if [ "${CIRCLE_BRANCH}" == "feature/helm-deploy" ]; then
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
               docker tag app "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}:latest"
               docker push "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}:latest"
             fi
       - deploy:
           name: Helm deployment
           command: | 
-            if [ "${CIRCLE_BRANCH}" == "feature/helm-deploy" ]; then
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
               kubectl delete job django-app-circleci-db-migration
               helm upgrade django-app-circleci ./helm_deploy/django-app/. \
                            --tiller-namespace=${APPLICATION_ENV_NAME} \
