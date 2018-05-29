@@ -14,7 +14,6 @@ The cluster you'll be using for this exercise is the cloud-platform-non-prod clu
    * [Creating a Cloud Platform Enviroment](#app-deploy)
    * [Deploying with Helm](#helm-deploy)
 
-
 ## Installing with kubectl
 There are many ways to deploying applications to the MoJ Cloud Platform, the below will show the simplist; kubectl.
 
@@ -116,9 +115,17 @@ A repository has been created on the AWS account *'mojds-platform-integrations'*
 
 ```docker push 926803513772.dkr.ecr.eu-west-1.amazonaws.com/cloud-platform-demo-app:latest```
 
+### CircleCI build/push/deploy
+
+Following every commit to the master branch a job kicks off, which builds the Dockerfile on root, tags/pushes to ECR and deploys the reference application on the Cloud Platform cluster known as 'non-production'.
+
+The configuration for this job is in the directory `.circleci/config`. 
+
+To view the application live following deployment, you can view it here:
+
+https://circleci-demo.apps.non-production.k8s.integration.dsd.io
+
 ## To do;
- - [ ] Add full instructions on how to deploy app.
- - [ ] Add links for missing docs
  - [ ] Add postgres manifest
  - [ ] Add Helm Chart for Django app + postgres
  - [ ] Document postgres deployment and helm chart addition
