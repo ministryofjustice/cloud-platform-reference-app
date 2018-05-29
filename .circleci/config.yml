@@ -103,7 +103,7 @@ jobs:
               helm upgrade django-app-circleci ./helm_deploy/django-app/. \
                            --tiller-namespace=cloudplatforms-reference-app \
                            --namespace=cloudplatforms-reference-app \
-                           --set image.repository="${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}" \
+                           --set image.repository="${ECR_ENDPOINT}/${CIRCLE_PROJECT_REPONAME}" \
                            --set image.tag="latest" \
                            --set deploy.host="circleci-demo.apps.non-production.k8s.integration.dsd.io" \
                            --set replicaCount="3" \
