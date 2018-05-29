@@ -4,7 +4,8 @@ jobs:
     working_directory: /app
     docker:
       - image: docker:17.05.0-ce-git
-      - environment:
+        # environment variables for all commands executed in the primary container
+        environment:
           GITHUB_TEAM_NAME_SLUG: cloud-platform
           APPLICATION_HOST_URL: circleci-demo.apps.non-production.k8s.integration.dsd.io
           APPLICATION_ENV_NAME: cloudplatforms-reference-app
