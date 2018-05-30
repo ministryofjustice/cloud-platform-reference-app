@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: /app
     docker:
-      - image: docker:17.05.0-ce-git
+      - image: alkar/docker:17.05.0-ce-git
         # environment variables for all commands executed in the primary container
         environment:
           GITHUB_TEAM_NAME_SLUG: cloud-platform
@@ -13,35 +13,6 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - run:
-          name: Replace python2 with 3
-          command: |
-            apk add --no-cache python3 && \
-            python3 -m ensurepip && \
-            rm -r /usr/lib/python*/ensurepip && \
-            pip3 install --upgrade pip setuptools && \
-            if [ ! -e /usr/bin/pip ]; then ln -s pip3 /usr/bin/pip ; fi && \
-            if [[ ! -e /usr/bin/python ]]; then ln -sf /usr/bin/python3 /usr/bin/python; fi && \
-            rm -r /root/.cache
-      - run:
-          name: Install dependencies
-          command: |
-            apk update
-            apk upgrade
-            apk add openssl
-            apk add curl
-            curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-            chmod +x kubectl
-            mv ./kubectl /usr/local/bin/kubectl
-            curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get > get_helm.sh
-            chmod 700 get_helm.sh
-            sh get_helm.sh
-            apk add --no-cache \
-              make
-            pip install \
-              docker-compose==1.21.2 \
-              awscli==1.11.76 \
-              flake8==3.5.0
       - run:
           name: Run code tests
           command: |
@@ -92,5 +63,4 @@ jobs:
                             --set replicaCount="4" \
                             --debug
             fi
-            
             kubectl get pods --show-all
