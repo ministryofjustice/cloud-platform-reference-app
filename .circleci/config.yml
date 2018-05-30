@@ -7,7 +7,7 @@ jobs:
         # environment variables for all commands executed in the primary container
         environment:
           GITHUB_TEAM_NAME_SLUG: cloud-platform
-          APPLICATON_DEPLOY_NAME: django-app-circleci
+          APPLICATON_DEPLOY_NAME: test-pr-56
           APPLICATION_HOST_URL: test-pr-56.apps.non-production.k8s.integration.dsd.io
           APPLICATION_ENV_NAME: test-pr-56
     steps:
