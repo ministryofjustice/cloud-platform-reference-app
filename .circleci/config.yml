@@ -4,6 +4,12 @@ jobs:
     working_directory: /app
     docker:
       - image: docker:17.05.0-ce-git
+        # environment variables for all commands executed in the primary container
+        environment:
+          GITHUB_TEAM_NAME_SLUG: cloud-platform
+          APPLICATON_DEPLOY_NAME: django-app-circleci
+          APPLICATION_HOST_URL: circleci-demo.apps.non-production.k8s.integration.dsd.io
+          APPLICATION_ENV_NAME: cloudplatforms-reference-app
     steps:
       - checkout
       - setup_remote_docker
@@ -54,8 +60,8 @@ jobs:
             kubectl config set-context ${NON_PROD_CLUSTER_NAME} --cluster=${NON_PROD_CLUSTER_NAME} --user=circleci --namespace=cloudplatforms-reference-app
             kubectl config use-context ${NON_PROD_CLUSTER_NAME}
             kubectl get pods
-            helm init --tiller-namespace cloudplatforms-reference-app --client-only
-            helm list --tiller-namespace cloudplatforms-reference-app
+            helm init --tiller-namespace {APPLICATION_ENV_NAME} --client-only
+            helm list --tiller-namespace ${APPLICATION_ENV_NAME}
       - run:
           name: Load Docker image layer cache
           command: |
@@ -80,10 +86,6 @@ jobs:
             docker-compose -f docker-compose.test.yml up --abort-on-container-exit --quiet-pull --no-color --exit-code-from=app
       - deploy:
           name: Push application Docker image
-          environment:
-            # In order to have builds and images push working properly you should change
-            # following environment variable to your github team name slug.
-            GITHUB_TEAM_NAME_SLUG: cloud-platform
           command: |
             login="$(aws ecr get-login)"
             ${login}
@@ -95,3 +97,19 @@ jobs:
               docker tag app "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}:latest"
               docker push "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}:latest"
             fi
+      - deploy:
+          name: Helm deployment
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              helm upgrade ${APPLICATON_DEPLOY_NAME} ./helm_deploy/django-app/. \
+                            --install \
+                            --tiller-namespace=${APPLICATION_ENV_NAME} \
+                            --namespace=${APPLICATION_ENV_NAME} \
+                            --set image.repository="${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}" \
+                            --set image.tag="latest" \
+                            --set deploy.host="${APPLICATION_HOST_URL}" \
+                            --set replicaCount="4" \
+                            --debug
+            fi
+            
+            kubectl get pods --show-all
