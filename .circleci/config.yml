@@ -8,8 +8,8 @@ jobs:
         environment:
           GITHUB_TEAM_NAME_SLUG: cloud-platform
           APPLICATON_DEPLOY_NAME: django-app-circleci
-          APPLICATION_HOST_URL: circleci-demo.apps.non-production.k8s.integration.dsd.io
-          APPLICATION_ENV_NAME: cloudplatforms-reference-app
+          APPLICATION_HOST_URL: test-pr-56.apps.non-production.k8s.integration.dsd.io
+          APPLICATION_ENV_NAME: test-pr-56
     steps:
       - checkout
       - setup_remote_docker
