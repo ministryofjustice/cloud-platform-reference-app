@@ -1,4 +1,4 @@
-version: 2
+cloud-platformversion: 2
 jobs:
   build:
     working_directory: /app
@@ -60,8 +60,8 @@ jobs:
             kubectl config set-context ${NON_PROD_CLUSTER_NAME} --cluster=${NON_PROD_CLUSTER_NAME} --user=circleci --namespace=cloudplatforms-reference-app
             kubectl config use-context ${NON_PROD_CLUSTER_NAME}
             kubectl get pods
-            helm init --tiller-namespace cloudplatforms-reference-app --client-only
-            helm list --tiller-namespace cloudplatforms-reference-app
+            helm init --tiller-namespace {APPLICATION_ENV_NAME} --client-only
+            helm list --tiller-namespace ${APPLICATION_ENV_NAME}
       - run:
           name: Load Docker image layer cache
           command: |
@@ -102,7 +102,7 @@ jobs:
           command: |
             if [ "${CIRCLE_BRANCH}" == "feature/helm-deploy" ]; then
               helm upgrade ${APPLICATON_DEPLOY_NAME} ./helm_deploy/django-app/. \
-                            --install
+                            --install \
                             --tiller-namespace=${APPLICATION_ENV_NAME} \
                             --namespace=${APPLICATION_ENV_NAME} \
                             --set image.repository="${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}" \
