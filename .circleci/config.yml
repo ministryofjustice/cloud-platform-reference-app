@@ -93,21 +93,23 @@ jobs:
             docker tag app "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
             docker push "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
 
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+            if [ "${CIRCLE_BRANCH}" == "feature/helm-deploy" ]; then
               docker tag app "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}:latest"
               docker push "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}:latest"
             fi
       - deploy:
           name: Helm deployment
-          command: | 
-            helm upgrade ${APPLICATON_DEPLOY_NAME} ./helm_deploy/django-app/. \
-                          --install
-                          --tiller-namespace=${APPLICATION_ENV_NAME} \
-                          --namespace=${APPLICATION_ENV_NAME} \
-                          --set image.repository="${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}" \
-                          --set image.tag="latest" \
-                          --set deploy.host="${APPLICATION_HOST_URL}" \
-                          --set replicaCount="4" \
-                          --debug
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "feature/helm-deploy" ]; then
+              helm upgrade ${APPLICATON_DEPLOY_NAME} ./helm_deploy/django-app/. \
+                            --install
+                            --tiller-namespace=${APPLICATION_ENV_NAME} \
+                            --namespace=${APPLICATION_ENV_NAME} \
+                            --set image.repository="${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}" \
+                            --set image.tag="latest" \
+                            --set deploy.host="${APPLICATION_HOST_URL}" \
+                            --set replicaCount="4" \
+                            --debug
+            fi
             
             kubectl get pods --show-all
