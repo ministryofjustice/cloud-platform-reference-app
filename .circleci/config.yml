@@ -7,6 +7,7 @@ jobs:
         # environment variables for all commands executed in the primary container
         environment:
           GITHUB_TEAM_NAME_SLUG: cloud-platform
+          APPLICATON_DEPLOY_NAME: django-app-circleci
           APPLICATION_HOST_URL: circleci-demo.apps.non-production.k8s.integration.dsd.io
           APPLICATION_ENV_NAME: cloudplatforms-reference-app
     steps:
@@ -100,8 +101,9 @@ jobs:
           name: Helm deployment
           command: | 
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              kubectl delete job django-app-circleci-db-migration
-              helm upgrade django-app-circleci ./helm_deploy/django-app/. \
+              kubectl delete job ${APPLICATON_DEPLOY_NAME}-db-migration
+              helm upgrade ${APPLICATON_DEPLOY_NAME} ./helm_deploy/django-app/. \
+                           --install
                            --tiller-namespace=${APPLICATION_ENV_NAME} \
                            --namespace=${APPLICATION_ENV_NAME} \
                            --set image.repository="${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}" \
