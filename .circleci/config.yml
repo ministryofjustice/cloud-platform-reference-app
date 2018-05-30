@@ -86,7 +86,7 @@ jobs:
       - deploy:
           name: Push application Docker image
           command: |
-            login="$(aws ecr get-login)"
+            login="$(aws ecr get-login --no-include-email)"
             ${login}
 
             docker tag app "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
@@ -107,7 +107,7 @@ jobs:
                            --set image.repository="${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}" \
                            --set image.tag="latest" \
                            --set deploy.host="${APPLICATION_HOST_URL}" \
-                           --set replicaCount="3" \
+                           --set replicaCount="2" \
                            --debug
             fi
             kubectl get pods --show-all
