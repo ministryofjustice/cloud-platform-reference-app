@@ -101,7 +101,6 @@ jobs:
           name: Helm deployment
           command: | 
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              kubectl delete job ${APPLICATON_DEPLOY_NAME}-db-migration
               helm upgrade ${APPLICATON_DEPLOY_NAME} ./helm_deploy/django-app/. \
                            --install
                            --tiller-namespace=${APPLICATION_ENV_NAME} \
