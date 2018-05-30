@@ -60,6 +60,10 @@ jobs:
       - run:
           name: Build application Docker image
           command: |
+            login="$(aws ecr get-login)"
+            ${login}
+
+            docker pull "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}:latest"
             docker build -t app .
       - run:
           name: Run docker tests
