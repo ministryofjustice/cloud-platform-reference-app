@@ -12,7 +12,7 @@ jobs:
           APPLICATION_ENV_NAME: cloudplatforms-reference-app
     steps:
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
         docker_layer_caching: true
       - run:
           name: Run code tests
