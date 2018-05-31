@@ -8,7 +8,7 @@ jobs:
         environment:
           GITHUB_TEAM_NAME_SLUG: cloud-platform
           APPLICATON_DEPLOY_NAME: django-app-circleci
-          APPLICATION_HOST_URL: test2.apps.non-production.k8s.integration.dsd.io
+          APPLICATION_HOST_URL: showthething.apps.non-production.k8s.integration.dsd.io
           APPLICATION_ENV_NAME: cloudplatforms-reference-app
     steps:
       - checkout
