@@ -8,7 +8,7 @@ jobs:
         environment:
           GITHUB_TEAM_NAME_SLUG: cloud-platform
           APPLICATON_DEPLOY_NAME: django-app-circleci
-          APPLICATION_HOST_URL: circleci-demo-fsfsd.apps.non-production.k8s.integration.dsd.io
+          APPLICATION_HOST_URL: circleci-demo.apps.non-production.k8s.integration.dsd.io
           APPLICATION_ENV_NAME: cloudplatforms-reference-app
     steps:
       - checkout
