@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: /app
     docker:
-      - image: alkar/docker:17.05.0-ce-git
+      - image: 926803513772.dkr.ecr.eu-west-1.amazonaws.com/cloud-platform-circle-workers:reference-app
         # environment variables for all commands executed in the primary container
         environment:
           GITHUB_TEAM_NAME_SLUG: cloud-platform
