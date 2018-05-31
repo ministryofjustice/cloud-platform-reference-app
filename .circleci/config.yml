@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: /app
     docker:
-      - image: docker:17.05.0-ce-git
+      - image: 926803513772.dkr.ecr.eu-west-1.amazonaws.com/cloud-platform-circle-workers:reference-app
         # environment variables for all commands executed in the primary container
         environment:
           GITHUB_TEAM_NAME_SLUG: cloud-platform
@@ -12,45 +12,12 @@ jobs:
           APPLICATION_ENV_NAME: cloudplatforms-reference-app
     steps:
       - checkout
-      - setup_remote_docker
-      - run:
-          name: Replace python2 with 3
-          command: |
-            apk add --no-cache python3 && \
-            python3 -m ensurepip && \
-            rm -r /usr/lib/python*/ensurepip && \
-            pip3 install --upgrade pip setuptools && \
-            if [ ! -e /usr/bin/pip ]; then ln -s pip3 /usr/bin/pip ; fi && \
-            if [[ ! -e /usr/bin/python ]]; then ln -sf /usr/bin/python3 /usr/bin/python; fi && \
-            rm -r /root/.cache
-      - run:
-          name: Install dependencies
-          command: |
-            apk update
-            apk upgrade
-            apk add openssl
-            apk add curl
-            curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-            chmod +x kubectl
-            mv ./kubectl /usr/local/bin/kubectl
-            curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get > get_helm.sh
-            chmod 700 get_helm.sh
-            sh get_helm.sh
-            apk add --no-cache \
-              make
-            pip install \
-              docker-compose==1.21.2 \
-              awscli==1.11.76 \
-              flake8==3.5.0
+      - setup_remote_docker:
+          docker_layer_caching: true
       - run:
           name: Run code tests
           command: |
             make codetest
-      - restore_cache:
-          keys:
-            - v1-{{ .Branch }}
-          paths:
-            - /caches/app.tar
       - run:
           name: Authenticate with non-production cluster
           command: |
@@ -63,23 +30,9 @@ jobs:
             helm init --tiller-namespace {APPLICATION_ENV_NAME} --client-only
             helm list --tiller-namespace ${APPLICATION_ENV_NAME}
       - run:
-          name: Load Docker image layer cache
-          command: |
-            set +o pipefail
-            docker load -i /caches/app.tar | true
-      - run:
           name: Build application Docker image
           command: |
-            docker build --cache-from=app -t app .
-      - run:
-          name: Save Docker image layer cache
-          command: |
-            mkdir -p /caches
-            docker save -o /caches/app.tar app
-      - save_cache:
-          key: v1-{{ .Branch }}-{{ epoch }}
-          paths:
-            - /caches/app.tar
+            docker build -t app .
       - run:
           name: Run docker tests
           command: |
@@ -111,5 +64,4 @@ jobs:
                             --set replicaCount="4" \
                             --debug
             fi
-            
             kubectl get pods --show-all
