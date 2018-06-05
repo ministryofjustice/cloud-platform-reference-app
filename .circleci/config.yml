@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: /app
     docker:
-      - image: 926803513772.dkr.ecr.eu-west-1.amazonaws.com/cloud-platform-circle-workers:reference-app
+      - image: ${ECR_ENDPOINT}/cloud-platform-circle-workers:reference-app
         # environment variables for all commands executed in the primary container
         environment:
           GITHUB_TEAM_NAME_SLUG: cloud-platform
@@ -43,12 +43,12 @@ jobs:
             login="$(aws ecr get-login)"
             ${login}
 
-            docker tag app "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
-            docker push "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
+            docker tag app "${ECR_ENDPOINT}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
+            docker push "${ECR_ENDPOINT}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
 
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              docker tag app "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}:latest"
-              docker push "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}:latest"
+              docker tag app "${ECR_ENDPOINT}/${CIRCLE_PROJECT_REPONAME}:latest"
+              docker push "${ECR_ENDPOINT}/${CIRCLE_PROJECT_REPONAME}:latest"
             fi
       - deploy:
           name: Helm deployment
@@ -58,7 +58,7 @@ jobs:
                             --install \
                             --tiller-namespace=${APPLICATION_ENV_NAME} \
                             --namespace=${APPLICATION_ENV_NAME} \
-                            --set image.repository="${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}" \
+                            --set image.repository="${ECR_ENDPOINT}/${CIRCLE_PROJECT_REPONAME}" \
                             --set image.tag="latest" \
                             --set deploy.host="${APPLICATION_HOST_URL}" \
                             --set replicaCount="4" \
