@@ -9,7 +9,6 @@ jobs:
           GITHUB_TEAM_NAME_SLUG: cloud-platform
           APPLICATON_DEPLOY_NAME: django-app-circleci
           APPLICATION_HOST_URL: showthething.apps.non-production.k8s.integration.dsd.io
-          APPLICATION_ENV_NAME: cloudplatforms-reference-app
     steps:
       - checkout
       - setup_remote_docker:
@@ -27,8 +26,8 @@ jobs:
             kubectl config set-context ${NON_PROD_CLUSTER_NAME} --cluster=${NON_PROD_CLUSTER_NAME} --user=circleci --namespace=${NON_PROD_NS}
             kubectl config use-context ${NON_PROD_CLUSTER_NAME}
             kubectl get pods
-            helm init --tiller-namespace {APPLICATION_ENV_NAME} --client-only
-            helm list --tiller-namespace ${APPLICATION_ENV_NAME}
+            helm init --tiller-namespace ${NON_PROD_NS} --client-only
+            helm list --tiller-namespace ${NON_PROD_NS}
       - run:
           name: Build application Docker image
           command: |
@@ -56,8 +55,8 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               helm upgrade ${APPLICATON_DEPLOY_NAME} ./helm_deploy/django-app/. \
                             --install \
-                            --tiller-namespace=${APPLICATION_ENV_NAME} \
-                            --namespace=${APPLICATION_ENV_NAME} \
+                            --tiller-namespace=${NON_PROD_NS} \
+                            --namespace=${NON_PROD_NS} \
                             --set image.repository="${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}" \
                             --set image.tag="latest" \
                             --set deploy.host="${APPLICATION_HOST_URL}" \
