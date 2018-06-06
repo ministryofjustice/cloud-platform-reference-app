@@ -24,7 +24,7 @@ jobs:
             echo -n ${NON_PROD_CA_CERT} | base64 -d > ./ca.crt
             kubectl config set-cluster ${NON_PROD_CLUSTER_NAME} --certificate-authority=./ca.crt --server=https://api.${NON_PROD_CLUSTER_NAME}
             kubectl config set-credentials circleci --token=${NON_PROD_TOKEN}
-            kubectl config set-context ${NON_PROD_CLUSTER_NAME} --cluster=${NON_PROD_CLUSTER_NAME} --user=circleci --namespace=cloudplatforms-reference-app
+            kubectl config set-context ${NON_PROD_CLUSTER_NAME} --cluster=${NON_PROD_CLUSTER_NAME} --user=circleci --namespace=${NON_PROD_NS}
             kubectl config use-context ${NON_PROD_CLUSTER_NAME}
             kubectl get pods
             helm init --tiller-namespace {APPLICATION_ENV_NAME} --client-only
