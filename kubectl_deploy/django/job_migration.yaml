@@ -8,7 +8,7 @@ spec:
       containers:
         - name: django
           image: 926803513772.dkr.ecr.eu-west-1.amazonaws.com/cloud-platform-demo-app:latest
-          command: ["/bin/bash","-c","python3 django_reference_app/manage.py makemigrations django_reference_app && python3 django_reference_app/manage.py makemigrations govuk_template_base && python3 django_reference_app/manage.py migrate"]
+          command: ["/bin/bash","-c","python3 manage.py makemigrations guestbook && python3 manage.py makemigrations govuk_template_base && python3 manage.py migrate"]
           env:
             - name: POSTGRES_USER
               valueFrom:
