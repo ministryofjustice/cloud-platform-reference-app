@@ -27,7 +27,7 @@ spec:
                   key: secretKey
 
             - name: SERVER_NAME
-              value: demo.apps.cloud-platforms-test.k8s.integration.dsd.io
+              value: demo.apps.cloud-platform-test-1.k8s.integration.dsd.io 
 
             - name: POSTGRES_USER
               valueFrom:
