@@ -1,18 +1,12 @@
 # Getting started on the MoJ Cloud Platform: Demo Application
-This repository will contain the required files to follow along with the MoJ Digital Getting Started ----Add Link----, the intended outcome of this document is to allow you to run a basic Django web application on the MoJ Cloud Platform.
+This repository will contain the required files to follow along with the MoJ Digital [Getting Started](https://ministryofjustice.github.io/cloud-platform-user-docs/02-deploying-an-app/002-app-deploy-helm/#deploying-an-application-to-the-cloud-platform-with-helm), the intended outcome of this document is to allow you to run a basic Django web application on the MoJ Cloud Platform.
 
 When discussing the MoJ Cloud Platform in this context, we're referring to a Kops deployed Kubernetes cluster hosted on AWS.
-
-Getting started guide: https://ministryofjustice.github.io/cloud-platform-user-docs/cloud-platform/env-create/#creating-a-cloud-platform-environment
-
-The cluster you'll be using for this exercise is the cloud-platform-non-prod cluster.
 
 ## Table of contents
    * [Installation with kubectl](#installing-with-kubectl)
    * [Developing and building the app locally](#local-development)
    * [Building, tagging and pushing to ECR](#pushing-to-ecr)
-   * [Creating a Cloud Platform Enviroment](#app-deploy)
-   * [Deploying with Helm](#helm-deploy)
 
 ## Installing with kubectl
 There are many ways to deploying applications to the MoJ Cloud Platform, the below will show the simplist; kubectl.
@@ -22,11 +16,10 @@ There are many ways to deploying applications to the MoJ Cloud Platform, the bel
 ```brew install kubectl```
 
 * Authenticate
-Gain access to the non-production cluster by authenticating with your GitHub account. Use the instructions here:
----- add-link ----
+Gain access to a Cloud-Platform cluster by authenticating with your GitHub account using the instructions [here](https://ministryofjustice.github.io/cloud-platform-user-docs/01-getting-started/001-kubectl-config/#kubectl-configuration).
 
 * Create namespace
-Follow the instructions here to create a namespace on the cloud-platform-non-prod cluster: https://ministryofjustice.github.io/cloud-platform-user-docs/cloud-platform/env-create/#creating-a-cloud-platform-environment
+Follow the instructions [here](https://ministryofjustice.github.io/cloud-platform-user-docs/01-getting-started/002-env-create/#creating-a-cloud-platform-environment) to create a namespace.
 
 ### TL;DR
 ```
@@ -117,15 +110,9 @@ A repository has been created on the AWS account *'mojds-platform-integrations'*
 
 ### CircleCI build/push/deploy
 
-Following every commit to the master branch a job kicks off, which builds the Dockerfile on root, tags/pushes to ECR and deploys the reference application on the Cloud Platform cluster known as 'non-production'.
+Following every commit to the master branch a job kicks off, which builds the Dockerfile on root, tags/pushes to ECR and deploys the reference application on the Cloud Platform.
 
 The configuration for this job is in the directory `.circleci/config`. 
 
-To view the application live following deployment, you can view it here:
-
-https://circleci-demo.apps.non-production.k8s.integration.dsd.io
-
 ## To do;
- - [ ] Add postgres manifest
- - [ ] Add Helm Chart for Django app + postgres
  - [ ] Document postgres deployment and helm chart addition
