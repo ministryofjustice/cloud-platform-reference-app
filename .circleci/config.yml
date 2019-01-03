@@ -8,7 +8,7 @@ jobs:
         environment:
           GITHUB_TEAM_NAME_SLUG: cloud-platform
           APPLICATON_DEPLOY_NAME: django-app-circleci
-          APPLICATION_HOST_URL: showthething.apps.non-production.k8s.integration.dsd.io
+          APPLICATION_HOST_URL: ${K8S_NAMESPACE}.apps.${K8S_CLUSTER_NAME}
     steps:
       - checkout
       - setup_remote_docker:
@@ -20,14 +20,15 @@ jobs:
       - run:
           name: Authenticate with non-production cluster
           command: |
-            echo -n ${NON_PROD_CA_CERT} | base64 -d > ./ca.crt
-            kubectl config set-cluster ${NON_PROD_CLUSTER_NAME} --certificate-authority=./ca.crt --server=https://api.${NON_PROD_CLUSTER_NAME}
-            kubectl config set-credentials circleci --token=${NON_PROD_TOKEN}
-            kubectl config set-context ${NON_PROD_CLUSTER_NAME} --cluster=${NON_PROD_CLUSTER_NAME} --user=circleci --namespace=${NON_PROD_NS}
-            kubectl config use-context ${NON_PROD_CLUSTER_NAME}
+            echo -n ${K8S_CLUSTER_CERT} | base64 -d > ./ca.crt
+            kubectl config set-cluster ${K8S_CLUSTER_NAME} --certificate-authority=./ca.crt --server=https://api.${K8S_CLUSTER_NAME}
+            kubectl config set-credentials circleci --token=${K8S_TOKEN}
+            kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=${K8S_NAMESPACE}
+            kubectl config use-context ${K8S_CLUSTER_NAME}
             kubectl get pods
-            helm init --tiller-namespace ${NON_PROD_NS} --client-only
-            helm list --tiller-namespace ${NON_PROD_NS}
+            exit 1
+            helm init --tiller-namespace ${K8S_NAMESPACE} --client-only
+            helm list --tiller-namespace ${K8S_NAMESPACE}
       - run:
           name: Build application Docker image
           command: |
@@ -55,8 +56,8 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               helm upgrade ${APPLICATON_DEPLOY_NAME} ./helm_deploy/django-app/. \
                             --install \
-                            --tiller-namespace=${NON_PROD_NS} \
-                            --namespace=${NON_PROD_NS} \
+                            --tiller-namespace=${K8S_NAMESPACE} \
+                            --namespace=${K8S_NAMESPACE} \
                             --set image.repository="${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}" \
                             --set image.tag="latest" \
                             --set deploy.host="${APPLICATION_HOST_URL}" \

@@ -2,6 +2,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: django-migrations
+  namespace: ${K8S_NAMESPACE}
 spec:
   template:
     spec:

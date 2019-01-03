@@ -2,6 +2,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: django-postgres
+  namespace: ${K8S_NAMESPACE}
 spec:
   selector:
     app: postgres-container

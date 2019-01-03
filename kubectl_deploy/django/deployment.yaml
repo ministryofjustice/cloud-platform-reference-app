@@ -2,6 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: django
+  namespace: ${K8S_NAMESPACE}
   labels:
     app: django
 spec:
@@ -27,7 +28,7 @@ spec:
                   key: secretKey
 
             - name: SERVER_NAME
-              value: demo.apps.cloud-platform-test-1.k8s.integration.dsd.io 
+              value: ${K8S_NAMESPACE}.apps.${K8S_CLUSTER_NAME}
 
             - name: POSTGRES_USER
               valueFrom:
