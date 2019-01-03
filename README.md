@@ -121,4 +121,7 @@ A repository has been created on the AWS account *'mojds-platform-integrations'*
 
 Following every commit to the master branch a job kicks off, which builds the Dockerfile on root, tags/pushes to ECR and deploys the reference application on the Cloud Platform.
 
-The configuration for this job is in the directory `.circleci/config`. 
+The configuration for this job is in the directory `.circleci/config`.
+
+A set of env vars must be defined for Circle to access the ECR and K8s cluster:
+![circle env vars](circle-env-vars.png)
