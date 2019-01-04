@@ -7,7 +7,7 @@ jobs:
         # environment variables for all commands executed in the primary container
         environment:
           GITHUB_TEAM_NAME_SLUG: cloud-platform
-          APPLICATON_DEPLOY_NAME: django-app-circleci
+          APPLICATON_DEPLOY_NAME: reference-app
           APPLICATION_HOST_URL: ${K8S_NAMESPACE}.apps.${K8S_CLUSTER_NAME}
     steps:
       - checkout
@@ -18,7 +18,7 @@ jobs:
           command: |
             make codetest
       - run:
-          name: Authenticate with non-production cluster
+          name: Authenticate with cluster
           command: |
             echo -n ${K8S_CLUSTER_CERT} | base64 -d > ./ca.crt
             kubectl config set-cluster ${K8S_CLUSTER_NAME} --certificate-authority=./ca.crt --server=https://api.${K8S_CLUSTER_NAME}
@@ -26,7 +26,6 @@ jobs:
             kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=${K8S_NAMESPACE}
             kubectl config use-context ${K8S_CLUSTER_NAME}
             kubectl get pods
-            exit 1
             helm init --tiller-namespace ${K8S_NAMESPACE} --client-only
             helm list --tiller-namespace ${K8S_NAMESPACE}
       - run:
@@ -53,7 +52,7 @@ jobs:
       - deploy:
           name: Helm deployment
           command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+            if [ "${CIRCLE_BRANCH}" == "masterr" ]; then
               helm upgrade ${APPLICATON_DEPLOY_NAME} ./helm_deploy/django-app/. \
                             --install \
                             --tiller-namespace=${K8S_NAMESPACE} \
