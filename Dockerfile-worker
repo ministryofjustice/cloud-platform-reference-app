@@ -11,7 +11,7 @@ RUN apk add --no-cache python3 && \
 RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.11.6/bin/linux/amd64/kubectl && \
     chmod +x kubectl && mv ./kubectl /usr/local/bin/kubectl
 RUN curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get > get_helm.sh && \
-    chmod 700 get_helm.sh && sh get_helm.sh --version v2.11.0
+    chmod 700 get_helm.sh && sh get_helm.sh --version v2.12.1
 RUN pip install \
     docker-compose~=1.21.2 \
     awscli~=1.11.76 \
