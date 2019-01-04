@@ -26,8 +26,8 @@ jobs:
             kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=${K8S_NAMESPACE}
             kubectl config use-context ${K8S_CLUSTER_NAME}
             kubectl get pods
-            helm init --tiller-namespace ${K8S_NAMESPACE} || true
-            helm list --tiller-namespace ${K8S_NAMESPACE}
+            helm --kube-context ${K8S_CLUSTER_NAME} --tiller-namespace ${K8S_NAMESPACE} init --upgrade
+            helm --kube-context ${K8S_CLUSTER_NAME} --tiller-namespace ${K8S_NAMESPACE} ls
       - run:
           name: Build application Docker image
           command: |
