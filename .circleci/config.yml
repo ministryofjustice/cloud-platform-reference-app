@@ -53,8 +53,7 @@ jobs:
           name: Helm deployment
           command: |
             if [ "${CIRCLE_BRANCH}" == "cert-manager" ]; then
-              helm upgrade ${APPLICATON_DEPLOY_NAME} ./helm_deploy/django-app/. \
-                            --install \
+              helm install ${APPLICATON_DEPLOY_NAME} ./helm_deploy/django-app/. \
                             --tiller-namespace=${K8S_NAMESPACE} \
                             --namespace=${K8S_NAMESPACE} \
                             --set image.repository="${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}" \
