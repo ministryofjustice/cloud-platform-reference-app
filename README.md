@@ -125,3 +125,9 @@ The configuration for this job is in the directory `.circleci/config`.
 
 A set of env vars must be defined for Circle to access the ECR and K8s cluster:
 ![circle env vars](circle-env-vars.png)
+ECR credentials are obtained following [using the Terraform module](https://github.com/ministryofjustice/cloud-platform-terraform-ecr-credentials)
+
+K8s token and cert are copied from the serviceaccount, see `kubectl_deploy/namespace/` for an example
+```
+kubectl --context ${K8S_CLUSTER_NAME} -n ${K8S_NAMESPACE} get secret circleci-token -o json | jq -r '(.data.token | @base64d), .data."ca.crt"'
+```

@@ -25,4 +25,18 @@ spec:
   - from:
     - namespaceSelector:
         matchLabels:
-          component: ingress-controllers
+          name: ingress-controllers
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-certmanager-acme
+spec:
+  policyTypes:
+  - Ingress
+  podSelector: # allow the certmanager http server (for ACME protocol) to be reached from LetsEncrypt
+    matchExpressions: # Look for the labels but ignore their contents
+    - {key: certmanager.k8s.io/acme-http-domain, operator: Exists}
+    - {key: certmanager.k8s.io/acme-http-token, operator: Exists}
+  ingress: # allow from anywhere inside the cluster or on the internet
+  - from: []
