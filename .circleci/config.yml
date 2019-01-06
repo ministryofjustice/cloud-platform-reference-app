@@ -53,6 +53,7 @@ jobs:
           name: Helm deployment
           command: |
             if [ "${CIRCLE_BRANCH}" == "cert-manager" ]; then
+              helm --kube-context ${K8S_CLUSTER_NAME} --tiller-namespace=${K8S_NAMESPACE} delete --purge reference-app
               helm install --name ${APPLICATON_DEPLOY_NAME} ./helm_deploy/django-app/. \
                             --kube-context ${K8S_CLUSTER_NAME} \
                             --tiller-namespace=${K8S_NAMESPACE} \
@@ -60,7 +61,8 @@ jobs:
                             --set image.repository="${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}" \
                             --set image.tag="latest" \
                             --set deploy.host="${APPLICATION_HOST_URL}" \
-                            --set replicaCount="4" \
+                            --set tls.hosts="${APPLICATION_HOST_URL}" \
+                            --set replicaCount="1" \
                             --debug \
                             --wait
             fi

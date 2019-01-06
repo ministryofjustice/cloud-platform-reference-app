@@ -5,7 +5,7 @@
 replicaCount: 2
 
 image:
-  repository: 926803513772.dkr.ecr.eu-west-1.amazonaws.com/cloud-platform-demo-app
+  repository: 926803513772.dkr.ecr.eu-west-1.amazonaws.com/cloud-platform/cloud-platform-reference-app
   tag: latest
   pullPolicy: Always
 
@@ -15,18 +15,15 @@ service:
 
 ingress:
   enabled: true
-  annotations: {}
+  annotations:
     kubernetes.io/ingress.class: nginx
     kubernetes.io/tls-acme: "true"
     certmanager.k8s.io/cluster-issuer: letsencrypt-production
   path: /
   tls:
     - secretName: demo-secret
-      hosts:
-        - ""
 
 deploy: 
-  host: ""
   secretKey: "EdocGMybHpWR2hsVTJWamNtVjBTMlY1VG05MGFHbHVaMVJ2VTJWbFNHVnlaUzQ9"
 
 postgresql:
