@@ -51,7 +51,7 @@ jobs:
       - deploy:
           name: Helm deployment
           command: |
-            if [ "${CIRCLE_BRANCH}" == "cert-manager" ]; then
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
               helm upgrade ${APPLICATON_DEPLOY_NAME} ./helm_deploy/django-app/. \
                             --kube-context ${K8S_CLUSTER_NAME} \
                             --tiller-namespace=${K8S_NAMESPACE} \
@@ -60,7 +60,6 @@ jobs:
                             --set image.tag="latest" \
                             --set deploy.host=${K8S_NAMESPACE}.apps.${K8S_CLUSTER_NAME} \
                             --set tls.hosts=${K8S_NAMESPACE}.apps.${K8S_CLUSTER_NAME} \
-                            --debug \
                             --wait
             fi
             kubectl get pods
