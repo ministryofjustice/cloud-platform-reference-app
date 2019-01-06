@@ -53,7 +53,7 @@ jobs:
           name: Helm deployment
           command: |
             if [ "${CIRCLE_BRANCH}" == "cert-manager" ]; then
-              helm --kube-context ${K8S_CLUSTER_NAME} --tiller-namespace=${K8S_NAMESPACE} delete --purge ${APPLICATON_DEPLOY_NAME}
+              helm --kube-context ${K8S_CLUSTER_NAME} --tiller-namespace=${K8S_NAMESPACE} delete --purge ${APPLICATON_DEPLOY_NAME} || true
               helm install --name ${APPLICATON_DEPLOY_NAME} ./helm_deploy/django-app/. \
                             --kube-context ${K8S_CLUSTER_NAME} \
                             --tiller-namespace=${K8S_NAMESPACE} \
