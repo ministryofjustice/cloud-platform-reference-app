@@ -21,7 +21,7 @@ ingress:
     certmanager.k8s.io/cluster-issuer: letsencrypt-production
   path: /
   tls:
-    - secretName: demo-secret
+    secretName: demo-secret
 
 deploy: 
   secretKey: "EdocGMybHpWR2hsVTJWamNtVjBTMlY1VG05MGFHbHVaMVJ2VTJWbFNHVnlaUzQ9"
