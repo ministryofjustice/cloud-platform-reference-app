@@ -2,8 +2,8 @@
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: reference-app-admin
-  namespace: reference-app
+  name: demo-app-admin
+  namespace: demo-app
 subjects:
   - kind: Group
     name: "github:webops"
