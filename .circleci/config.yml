@@ -60,7 +60,6 @@ jobs:
                             --set image.tag="latest" \
                             --set deploy.host=${K8S_NAMESPACE}.apps.${K8S_CLUSTER_NAME} \
                             --set tls.hosts=${K8S_NAMESPACE}.apps.${K8S_CLUSTER_NAME} \
-                            --set replicaCount="1" \
                             --debug \
                             --wait
             fi
