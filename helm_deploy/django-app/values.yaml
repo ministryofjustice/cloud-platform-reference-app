@@ -5,7 +5,7 @@
 replicaCount: 2
 
 image:
-  repository: 926803513772.dkr.ecr.eu-west-1.amazonaws.com/cloud-platform-demo-app
+  repository: 926803513772.dkr.ecr.eu-west-1.amazonaws.com/cloud-platform/cloud-platform-reference-app
   tag: latest
   pullPolicy: Always
 
