@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: django
-          image: 926803513772.dkr.ecr.eu-west-1.amazonaws.com/cloud-platform-demo-app:latest
+          image: 926803513772.dkr.ecr.eu-west-1.amazonaws.com/cloud-platform/cloud-platform-reference-app:metrics6
           ports:
             - containerPort: 8000
           env:
@@ -27,7 +27,7 @@ spec:
                   key: secretKey
 
             - name: SERVER_NAME
-              value: demo.apps.cloud-platform-test-1.k8s.integration.dsd.io 
+              value: demo.apps.cloud-platform-test-10.k8s.integration.dsd.io 
 
             - name: POSTGRES_USER
               valueFrom:
