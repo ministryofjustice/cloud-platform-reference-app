@@ -2,6 +2,8 @@ kind: Service
 apiVersion: v1
 metadata:
   name: django-service
+  labels:
+    app: django-ref-app   
 spec:
   selector:
     app: django-ref-app
@@ -9,5 +11,8 @@ spec:
   - protocol: TCP
     port: 8000
     targetPort: 8000
+    name: metrics
   type: NodePort
+  
+  
 
