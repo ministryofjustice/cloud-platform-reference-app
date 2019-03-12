@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.urls import include, path
 from django.views.generic import TemplateView
+from django.conf.urls import url
 
 
 homepage_view = TemplateView.as_view(
@@ -27,4 +28,5 @@ homepage_view = TemplateView.as_view(
 urlpatterns = [
     path('', homepage_view, name='homepage'),
     path('guestbook/', include('guestbook.urls', namespace='guestbook')),
+    url('', include('django_prometheus.urls')),
 ]

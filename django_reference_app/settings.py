@@ -25,10 +25,10 @@ SECRET_KEY = os.environ.get('SECRET_KEY',
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    os.environ.get('SERVER_IP', '127.0.0.1'),
-    os.environ.get('SERVER_NAME', 'localhost'),
-]
+ALLOWED_HOSTS = ['*']
+# os.environ.get('SERVER_IP', '127.0.0.1'),
+# os.environ.get('SERVER_NAME', 'localhost'),
+
 
 # Application definition
 
@@ -41,10 +41,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'govuk_template_base',
     'guestbook',
-    'govuk_forms'
+    'govuk_forms',
+    'django_prometheus',
 ]
 
 MIDDLEWARE = [
+    'django_prometheus.middleware.PrometheusBeforeMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -52,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_prometheus.middleware.PrometheusAfterMiddleware',
 ]
 
 ROOT_URLCONF = 'django_reference_app.urls'
