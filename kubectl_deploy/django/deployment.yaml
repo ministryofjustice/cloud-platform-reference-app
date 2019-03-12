@@ -29,7 +29,7 @@ spec:
                   key: secretKey
 
             - name: SERVER_NAME
-              value: ${K8S_NAMESPACE}.apps.${K8S_CLUSTER_NAME}
+              value: ${K8S_NAMESPACE}.acme-apps.${K8S_CLUSTER_NAME}
 
             - name: POSTGRES_USER
               valueFrom:
