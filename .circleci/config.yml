@@ -52,7 +52,7 @@ jobs:
           name: Helm deployment
           command: |
             if [ "${CIRCLE_BRANCH}" == "cert-manager" ]; then
-              helm upgrade ${APPLICATON_DEPLOY_NAME} ./helm_deploy/django-app/. \
+              helm upgrade --install ${APPLICATON_DEPLOY_NAME} ./helm_deploy/django-app/. \
                             --kube-context ${K8S_CLUSTER_NAME} \
                             --tiller-namespace=${K8S_NAMESPACE} \
                             --namespace=${K8S_NAMESPACE} \
