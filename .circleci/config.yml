@@ -24,7 +24,7 @@ jobs:
             kubectl config set-credentials circleci --token=${K8S_TOKEN}
             kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=${K8S_NAMESPACE}
             kubectl config use-context ${K8S_CLUSTER_NAME}
-            kubectl get pods
+            kubectl --namespace=${K8S_NAMESPACE} get pods
             helm --kube-context ${K8S_CLUSTER_NAME} --tiller-namespace ${K8S_NAMESPACE} --service-account circleci init --upgrade --wait
             helm --kube-context ${K8S_CLUSTER_NAME} --tiller-namespace ${K8S_NAMESPACE} ls
       - run:
@@ -62,4 +62,4 @@ jobs:
                             --set tls.hosts=${K8S_NAMESPACE}.apps.${K8S_CLUSTER_NAME} \
                             --wait
             fi
-            kubectl get pods
+            kubectl --namespace=${K8S_NAMESPACE} get pods
