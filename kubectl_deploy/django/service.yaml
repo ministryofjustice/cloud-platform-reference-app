@@ -1,9 +1,11 @@
+---
 kind: Service
 apiVersion: v1
 metadata:
   name: django-service
+  namespace: ${K8S_NAMESPACE}
   labels:
-    app: django-ref-app   
+    app: django-ref-app
 spec:
   selector:
     app: django-ref-app

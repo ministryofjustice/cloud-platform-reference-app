@@ -9,17 +9,22 @@ When discussing the MoJ Cloud Platform in this context, we're referring to a Kop
    * [Building, tagging and pushing to ECR](#pushing-to-ecr)
 
 ## Installing with kubectl
-There are many ways to deploying applications to the MoJ Cloud Platform, the below will show the simplist; kubectl.
+There are several ways to deploy applications onto the MoJ Cloud Platform, the below will show the simplest - kubectl.
 
 ### Prerequisites
 * Install kubectl
 ```brew install kubectl```
+* Install gettext
+```brew install gettext```
 
 * Authenticate
 Gain access to a Cloud-Platform cluster by authenticating with your GitHub account using the instructions [here](https://ministryofjustice.github.io/cloud-platform-user-docs/01-getting-started/001-kubectl-config/#kubectl-configuration).
 
 * Create namespace
-Follow the instructions [here](https://ministryofjustice.github.io/cloud-platform-user-docs/01-getting-started/002-env-create/#creating-a-cloud-platform-environment) to create a namespace.
+Follow the instructions [here](https://ministryofjustice.github.io/cloud-platform-user-docs/01-getting-started/002-env-create/#creating-a-cloud-platform-environment) to create a namespace, an example output is in the `kubectl_deploy/namespace/` folder.
+Once done, 2 environment variables must be exported:
+`${K8S_CLUSTER_NAME}`, matching both the DNS and profile name for the cluster defined in `~/.kube/config`, usually `cloud-platform-live-0.k8s.integration.dsd.io`
+`${K8S_NAMESPACE}`, matching the name created above
 
 ### TL;DR
 ```
@@ -28,17 +33,19 @@ $ git clone git@github.com:ministryofjustice/cloud-platform-reference-app.git
 $ cd cloud-platform-reference-app
 
 # Apply Manifests
-$ kubectl apply --namespace=<namespace> -f kubectl_deploy/.
+$  cat kubectl_deploy/postgres/*yaml | /usr/local/opt/gettext/bin/envsubst | kubectl --context ${K8S_CLUSTER_NAME} apply -f -
+$  cat kubectl_deploy/django/*yaml | /usr/local/opt/gettext/bin/envsubst | kubectl --context ${K8S_CLUSTER_NAME} apply -f -
 
 # Ensure app is running
-$ kubectl get pods -n <namespace>
+$ kubectl --context ${K8S_CLUSTER_NAME} get pods -n ${K8S_NAMESPACE}
 
 # Grab URL and test in browser of your choice
-$ kubectl get ingress -n <namespace>
+$ kubectl --context ${K8S_CLUSTER_NAME} get ingress -n ${K8S_NAMESPACE}
 
 # Delete app when done
-$ kubectl delete --namespace=<namespace> -f kubectl_deploy/.
-$ kubectl get pods -n <namespace> # you should have nothing running
+$  cat kubectl_deploy/django/*yaml | /usr/local/opt/gettext/bin/envsubst | kubectl --context ${K8S_CLUSTER_NAME} delete -f -
+$  cat kubectl_deploy/postgres/*yaml | /usr/local/opt/gettext/bin/envsubst | kubectl --context ${K8S_CLUSTER_NAME} delete -f -
+$ kubectl --context ${K8S_CLUSTER_NAME} get pods -n ${K8S_NAMESPACE} # you should have nothing running
 ```
 ## Local development
 ### Prerequisites
@@ -82,8 +89,10 @@ Open browser to [http://127.0.0.1:8000](http://127.0.0.1:8000)
 ## Pushing to ECR
 ### Prerequisites
 * Docker
+```brew install docker```
 
 * AWS CLI
+```brew install awscli```
 
 The decision was made to use the Amazon Elastic Container Registry. ECR is a fully-managed [Docker](https://aws.amazon.com/docker/) container registry that makes it easy for developers to store, manage, and deploy Docker container images.
 
@@ -112,7 +121,13 @@ A repository has been created on the AWS account *'mojds-platform-integrations'*
 
 Following every commit to the master branch a job kicks off, which builds the Dockerfile on root, tags/pushes to ECR and deploys the reference application on the Cloud Platform.
 
-The configuration for this job is in the directory `.circleci/config`. 
+The configuration for this job is in the directory `.circleci/config`.
 
-## To do;
- - [ ] Document postgres deployment and helm chart addition
+A set of env vars must be defined for Circle to access the ECR and K8s cluster:
+![circle env vars](circle-env-vars.png)
+ECR credentials are obtained following [using the Terraform module](https://github.com/ministryofjustice/cloud-platform-terraform-ecr-credentials)
+
+K8s token and cert are copied from the serviceaccount, see `kubectl_deploy/namespace/` for an example
+```
+kubectl --context ${K8S_CLUSTER_NAME} -n ${K8S_NAMESPACE} get secret circleci-token -o json | jq -r '(.data.token | @base64d), .data."ca.crt"'
+```

@@ -1,7 +1,9 @@
+---
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
   name: postgres
+  namespace: ${K8S_NAMESPACE}
 spec:
   replicas: 1
   selector:

@@ -17,13 +17,8 @@ metadata:
 spec:
 {{- if .Values.ingress.tls }}
   tls:
-  {{- range .Values.ingress.tls }}
     - hosts:
-      {{- range .hosts }}
-        - {{ . }}
-      {{- end }}
-      secretName: {{ .secretName }}
-  {{- end }}
+      - {{ .Values.deploy.host }}
 {{- end }}
   rules:
     - host: {{ .Values.deploy.host }}
