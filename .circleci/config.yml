@@ -3,12 +3,11 @@ jobs:
   build:
     working_directory: /app
     docker:
-      - image: ${ECR_ENDPOINT}/cloud-platform-circle-workers:reference-app
+      - image: ${ECR_ENDPOINT}/cloud-platform/circle-workers:reference-app
         # environment variables for all commands executed in the primary container
         environment:
           GITHUB_TEAM_NAME_SLUG: cloud-platform
-          APPLICATON_DEPLOY_NAME: django-app-circleci
-          APPLICATION_HOST_URL: showthething.apps.non-production.k8s.integration.dsd.io
+          APPLICATON_DEPLOY_NAME: demo-app
     steps:
       - checkout
       - setup_remote_docker:
