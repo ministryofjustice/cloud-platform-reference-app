@@ -2,6 +2,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: django-ref-app
+  namespace: ${K8S_NAMESPACE}
 spec:
   selector:
     matchLabels:
