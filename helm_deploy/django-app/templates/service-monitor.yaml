@@ -1,0 +1,13 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ template "django-app.fullname" . }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ template "django-app.name" . }}
+  endpoints:
+  - port: metrics
+    interval: 15s
+    
