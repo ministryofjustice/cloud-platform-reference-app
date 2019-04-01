@@ -8,6 +8,7 @@ jobs:
         environment:
           GITHUB_TEAM_NAME_SLUG: cloud-platform
           APPLICATON_DEPLOY_NAME: demo-app
+          REPONAME: reference-app
     steps:
       - checkout
       - setup_remote_docker:
@@ -41,12 +42,12 @@ jobs:
             login="$(aws ecr get-login --no-include-email)"
             ${login}
 
-            docker tag app "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
-            docker push "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
+            docker tag app "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${REPONAME}:${CIRCLE_SHA1}"
+            docker push "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${REPONAME}:${CIRCLE_SHA1}"
 
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              docker tag app "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}:latest"
-              docker push "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}:latest"
+              docker tag app "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${REPONAME}:latest"
+              docker push "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${REPONAME}:latest"
             fi
       - deploy:
           name: Helm deployment
@@ -56,7 +57,7 @@ jobs:
                             --kube-context ${K8S_CLUSTER_NAME} \
                             --tiller-namespace=${K8S_NAMESPACE} \
                             --namespace=${K8S_NAMESPACE} \
-                            --set image.repository=${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME} \
+                            --set image.repository=${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${REPONAME} \
                             --set image.tag="latest" \
                             --set deploy.host=${K8S_NAMESPACE}.apps.${K8S_CLUSTER_NAME} \
                             --set tls.hosts=${K8S_NAMESPACE}.apps.${K8S_CLUSTER_NAME} \
