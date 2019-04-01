@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: /app
     docker:
-      - image: ${ECR_ENDPOINT}/cloud-platform/circle-workers:reference-app
+      - image: ${ECR_ENDPOINT}/cloud-platform/reference-app:latest
         # environment variables for all commands executed in the primary container
         environment:
           GITHUB_TEAM_NAME_SLUG: cloud-platform
