@@ -5,8 +5,8 @@ jobs:
     docker:
       - image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/cloud-platform/reference-app:worker
         aws_auth:
-          aws_access_key_id: ${AWS_ACCESS_KEY_ID_a}
-          aws_secret_access_key: ${AWS_SECRET_ACCESS_KEY_a}
+          aws_access_key_id: ${AWS_ACCESS_KEY_ID_DEMO}
+          aws_secret_access_key: ${AWS_SECRET_ACCESS_KEY_DEMO}
         # environment variables for all commands executed in the primary container
         environment:
           GITHUB_TEAM_NAME_SLUG: cloud-platform
