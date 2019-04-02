@@ -3,10 +3,10 @@ jobs:
   build:
     working_directory: /app
     docker:
-      - image: ${ECR_ENDPOINT}/cloud-platform/reference-app:worker
+      - image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/cloud-platform/reference-app:worker
         aws_auth:
-          aws_access_key_id: ${AWS_ACCESS_KEY_ID}
-          aws_secret_access_key: ${AWS_SECRET_ACCESS_KEY}
+          aws_access_key_id: ${AWS_ACCESS_KEY_ID_DEMO}
+          aws_secret_access_key: ${AWS_SECRET_ACCESS_KEY_DEMO}
         # environment variables for all commands executed in the primary container
         environment:
           GITHUB_TEAM_NAME_SLUG: cloud-platform
@@ -42,7 +42,7 @@ jobs:
       - deploy:
           name: Push application Docker image
           command: |
-            login="$(aws ecr get-login --no-include-email)"
+            login="$(AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID_DEMO} AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY_DEMO} aws ecr get-login --no-include-email)"
             ${login}
 
             docker tag app "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${REPONAME}:${CIRCLE_SHA1}"
