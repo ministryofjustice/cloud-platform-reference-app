@@ -5,3 +5,4 @@ psycopg2-binary==2.7.6.1
 boto3==1.7.83
 flake8==3.5.0
 django-prometheus==1.0.15
+django-logging-json==1.15

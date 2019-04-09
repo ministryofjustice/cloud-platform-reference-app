@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: 926803513772.dkr.ecr.eu-west-1.amazonaws.com/cloud-platform/cloud-platform-reference-app
+  repository: accountid.dkr.ecr.region.amazonaws.com/cloud-platform/reference-app
   tag: latest
   pullPolicy: Always
 
@@ -33,3 +33,7 @@ postgresql:
     postgresHost: ""
     persistence:
       enabled: false
+
+elasticsearch:
+  host: ""
+  index: ""

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'guestbook',
     'govuk_forms',
     'django_prometheus',
+    'django_logging',
 ]
 
 MIDDLEWARE = [
@@ -55,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_prometheus.middleware.PrometheusAfterMiddleware',
+    'django_logging.middleware.DjangoLoggingMiddleware',
 ]
 
 ROOT_URLCONF = 'django_reference_app.urls'
@@ -141,3 +143,12 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+DJANGO_LOGGING = {
+    'CONSOLE_LOG': False,
+    'RESPONSE_FIELDS': ('status', 'reason', 'headers'),
+    'ELASTICSEARCH_ENABLED': True,
+    'ELASTICSEARCH_HOSTS': [os.getenv('ELASTICSEARCH_HOST', '')],
+    'ELASTICSEARCH_INDEX': os.getenv('ELASTICSEARCH_INDEX', ''),
+    'ELASTICSEARCH_SSL': True,
+}

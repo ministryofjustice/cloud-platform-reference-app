@@ -7,16 +7,16 @@ Please follow along with the [tutorial](https://ministryofjustice.github.io/clou
 ## Installing the Chart
 To install the chart:
 ```
-helm install helm_deploy/django-app/. \
-  --name <app-name> \
-  --namespace <env-name> \
-  --set deploy.host=<URL>
+helm --kube-context=<live> upgrade --install <app-name> helm_deploy/django-app/ \
+  --namespace <env-name> --set deploy.host=<URL> \
+  --set image.repository=<repository> --set image.tag=<tag> \
+  --set elasticsearch.host=<host> --set elasticsearch.index=<index>
 ```
 The ```app-name``` will be the name of your deployment. For example our reference Django reference app would be: `django-application`.
 
 The ```env-name``` here is the environment name (namespace) you've created in the [Creating a Cloud Platform Environment](https://ministryofjustice.github.io/cloud-platform-user-docs/cloud-platform/env-create/#creating-a-cloud-platform-environment) guide.
 
-The ```URL``` argument is the address your application will be served. An example of this is: `django-app.apps.cloud-platforms-test.k8s.integration.dsd.io`.
+The ```URL``` argument is the address your application will be served. An example of this is: `demo-django.apps.live-1.cloud-platform.service.justice.gov.uk`.
 
 There are a number of install switches available. Please visit the [Helm docs](https://docs.helm.sh/helm/#helm-install) for more information. 
 
@@ -29,9 +29,11 @@ helm del --purge <app-name>
 | Parameter  | Description     | Default |
 | ---------- | --------------- | ------- |
 | `replicaCount` | Used to set the number of replica pods used. | `1` |
-| `image.repository` | The image repository location. | `926803513772.dkr.ecr.eu-west-1.amazonaws.com/cloud-platform-demo-app`|
+| `image.repository` | The image repository location. | `754256621582.dkr.ecr.eu-west-2.amazonaws.com/cloud-platform/reference-app`|
 | `image.tag` | The image tag. | `latest` |
 | `image.pullPolicy` | Whether the image should pull | `Always` |
+| `elasticsearch.host` | Address to send app logs as rendered by [django-logging-json](https://pypi.org/project/django-logging-json/) | `search-test-yuq2c7ziybjvpmr2tllkghh6va.eu-west-2.es.amazonaws.com:443` |
+| `elasticsearch.index` | ES index, will be created on the first log sent if not existing | `demo-django` |
 | `service.type` | The type of service you wish to use | `ClusterIP` |
 | `service.port` | The port your service will use | `"8000"` |
 | `deploy.host` | The URL of your application | `""` |

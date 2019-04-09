@@ -52,6 +52,10 @@ spec:
               secretKeyRef:
                 name: {{ template "django-app.fullname" . }}
                 key: postgresDatabase
+          - name: ELASTICSEARCH_HOST
+            value: {{required "ES host is required" .Values.elasticsearch.host | quote }}
+          - name: ELASTICSEARCH_INDEX
+            value: {{required "ES index is required" .Values.elasticsearch.index | quote }}
           ports:
             - containerPort: 8000
           livenessProbe:
