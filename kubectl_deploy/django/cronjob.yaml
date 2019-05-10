@@ -1,0 +1,40 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: django-cronjob
+  namespace: ${K8S_NAMESPACE}
+spec:
+  schedule: "*/5 * * * *"
+  concurrencyPolicy: "Forbid"
+  failedJobsHistoryLimit: 5
+  successfulJobsHistoryLimit: 3
+  startingDeadlineSeconds: 300
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      activeDeadlineSeconds: 600
+      template:
+        spec:
+          containers:
+          - name: django-cronjob
+            image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/cloud-platform/reference-app:latest
+            imagePullPolicy: Always
+            command: ["/bin/bash","-c","python3 manage.py clearsessions"]
+            env:
+              - name: POSTGRES_USER
+                valueFrom:
+                  secretKeyRef:
+                    name: postgres-credentials
+                    key: user
+
+              - name: POSTGRES_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: postgres-credentials
+                    key: password
+
+              - name: POSTGRES_HOST
+                value: django-postgres
+
+          restartPolicy: Never
+
