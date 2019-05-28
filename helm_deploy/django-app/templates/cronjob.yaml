@@ -3,10 +3,10 @@ kind: CronJob
 metadata:
   name: {{ template "django-app.fullname" . }}-cronjob-{{ randAlphaNum 5 | lower }}
 spec:
-  schedule: "*/5 * * * *"
+  schedule: '0 */6 * * *'
   concurrencyPolicy: "Forbid"
-  failedJobsHistoryLimit: 5
-  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 2
+  successfulJobsHistoryLimit: 1
   startingDeadlineSeconds: 300
   jobTemplate:
     spec:
@@ -18,7 +18,7 @@ spec:
           - name: {{ template "django-app.fullname" . }}-cronjob
             image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
             imagePullPolicy: {{ .Values.image.pullPolicy }}
-            command: ["/bin/bash","-c","python3 manage.py clearsessions"]
+            command: ["/bin/bash","-c","python3 manage.py check || exit 1"]
             env:
               - name: POSTGRES_USER
                 valueFrom:
