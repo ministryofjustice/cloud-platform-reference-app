@@ -4,10 +4,10 @@ metadata:
   name: django-cronjob
   namespace: ${K8S_NAMESPACE}
 spec:
-  schedule: "*/5 * * * *"
+  schedule: '0 */6 * * *'
   concurrencyPolicy: "Forbid"
-  failedJobsHistoryLimit: 5
-  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 2
+  successfulJobsHistoryLimit: 1
   startingDeadlineSeconds: 300
   jobTemplate:
     spec:
@@ -19,7 +19,7 @@ spec:
           - name: django-cronjob
             image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/cloud-platform/reference-app:latest
             imagePullPolicy: Always
-            command: ["/bin/bash","-c","python3 manage.py clearsessions"]
+            command: ["/bin/bash","-c","python3 manage.py check || exit 1"]
             env:
               - name: POSTGRES_USER
                 valueFrom:
