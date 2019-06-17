@@ -19,11 +19,16 @@ ingress:
     kubernetes.io/ingress.class: nginx
     kubernetes.io/tls-acme: "true"
     certmanager.k8s.io/cluster-issuer: letsencrypt-production
+    nginx.ingress.kubernetes.io/auth-type: basic
+    nginx.ingress.kubernetes.io/auth-secret: basic-auth
   path: /
   tls:
     secretName: demo-secret
 
-deploy: 
+basicauth:
+  auth: bXl1c2VyOiRhcHIxJDJCbTRZZ3BpJFZwa2tBcno3elR6Ym1aWUc1eUtteTAK
+
+deploy:
   secretKey: "EdocGMybHpWR2hsVTJWamNtVjBTMlY1VG05MGFHbHVaMVJ2VTJWbFNHVnlaUzQ9"
 
 postgresql:
