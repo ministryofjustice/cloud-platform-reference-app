@@ -17,9 +17,10 @@ jobs:
     working_directory: /app
     docker:
       - image: ministryofjustice/cloud-platform-tools
-        aws_auth:
-          aws_access_key_id: ${AWS_ACCESS_KEY_ID_DEMO}
-          aws_secret_access_key: ${AWS_SECRET_ACCESS_KEY_DEMO}
+        # optional, for ECR
+        # aws_auth:
+          # aws_access_key_id: ${AWS_ACCESS_KEY_ID_DEMO}
+          # aws_secret_access_key: ${AWS_SECRET_ACCESS_KEY_DEMO}
         # environment variables for all commands executed in the primary container
         environment:
           GITHUB_TEAM_NAME_SLUG: cloud-platform
