@@ -16,7 +16,7 @@ jobs:
   build:
     working_directory: /app
     docker:
-      - image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/cloud-platform/reference-app:worker
+      - image: ministryofjustice/cloud-platform-tools
         aws_auth:
           aws_access_key_id: ${AWS_ACCESS_KEY_ID_DEMO}
           aws_secret_access_key: ${AWS_SECRET_ACCESS_KEY_DEMO}
