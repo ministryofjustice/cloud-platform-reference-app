@@ -1,5 +1,18 @@
 version: 2
 jobs:
+  gitopsy:
+    working_directory: /app
+    docker:
+      - image: ministryofjustice/cloud-platform-tools
+    steps:
+      - run:
+        name: just testing
+        command: |
+          if [ "$BUILDER" = "gitops" ]; then
+            echo "doing gitops"
+          else
+            echo "only running when started by gitops"
+          fi
   build:
     working_directory: /app
     docker:
