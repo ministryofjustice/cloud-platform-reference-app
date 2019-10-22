@@ -12,6 +12,7 @@ jobs:
               echo "doing gitops, my cluster is ${K8S_CLUSTER_NAME}"
             else
               echo "only running when started by gitops"
+              exit 1
             fi
   build:
     working_directory: /app
