@@ -9,7 +9,7 @@ jobs:
           name: just testing
           command: |
             if [ "$BUILDER" = "gitops" ]; then
-              echo "doing gitops"
+              echo "doing gitops, my cluster is ${K8S_CLUSTER_NAME}"
             else
               echo "only running when started by gitops"
             fi
@@ -30,6 +30,10 @@ jobs:
       - checkout
       - setup_remote_docker:
           docker_layer_caching: true
+      - run:
+        name: just testing
+        command: |
+          exit 1
       - run:
           name: Run code tests
           command: |
