@@ -31,9 +31,9 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
-        name: just testing
-        command: |
-          exit 1
+          name: just testing
+          command: |
+            exit 1
       - run:
           name: Run code tests
           command: |
