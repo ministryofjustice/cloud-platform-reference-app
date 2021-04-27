@@ -5,6 +5,7 @@ jobs:
       - image: ministryofjustice/cloud-platform-tools
         environment:
           GITHUB_TEAM_NAME_SLUG: cloud-platform
+          REPONAME: demo-app
     steps:
       - checkout
       - setup_remote_docker:
