@@ -1,27 +1,12 @@
 version: 2
 jobs:
-  gitopsy:
-    working_directory: /app
-    docker:
-      - image: ministryofjustice/cloud-platform-tools
-    steps:
-      - run:
-          name: just testing
-          command: |
-            if [ "$BUILDER" = "gitops" ]; then
-              echo "doing gitops, my cluster is ${K8S_CLUSTER_NAME}"
-            else
-              echo "only running when started by gitops"
-              exit 1
-            fi
   build:
     working_directory: /app
     docker:
       - image: ministryofjustice/cloud-platform-tools
-        # optional, for ECR
-        # aws_auth:
-          # aws_access_key_id: ${AWS_ACCESS_KEY_ID_DEMO}
-          # aws_secret_access_key: ${AWS_SECRET_ACCESS_KEY_DEMO}
+        aws_auth:
+          aws_access_key_id: ${AWS_ACCESS_KEY_ID_DEMO}
+          aws_secret_access_key: ${AWS_SECRET_ACCESS_KEY_DEMO}
         # environment variables for all commands executed in the primary container
         environment:
           GITHUB_TEAM_NAME_SLUG: cloud-platform
@@ -31,10 +16,6 @@ jobs:
       - checkout
       - setup_remote_docker:
           docker_layer_caching: true
-      - run:
-          name: just testing
-          command: |
-            exit 1
       - run:
           name: Run code tests
           command: |
@@ -67,14 +48,14 @@ jobs:
             docker tag app "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${REPONAME}:${CIRCLE_SHA1}"
             docker push "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${REPONAME}:${CIRCLE_SHA1}"
 
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+            if [ "${CIRCLE_BRANCH}" == "main" ]; then
               docker tag app "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${REPONAME}:latest"
               docker push "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${REPONAME}:latest"
             fi
       - deploy:
           name: Helm deployment
           command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+            if [ "${CIRCLE_BRANCH}" == "main" ]; then
               helm upgrade --install ${APPLICATON_DEPLOY_NAME} ./helm_deploy/django-app/. \
                             --kube-context ${K8S_CLUSTER_NAME} \
                             --tiller-namespace=${K8S_NAMESPACE} \
