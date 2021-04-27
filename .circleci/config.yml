@@ -1,25 +1,14 @@
 version: 2
 jobs:
   build:
-    working_directory: /app
     docker:
       - image: ministryofjustice/cloud-platform-tools
-        aws_auth:
-          aws_access_key_id: ${AWS_ACCESS_KEY_ID_DEMO}
-          aws_secret_access_key: ${AWS_SECRET_ACCESS_KEY_DEMO}
-        # environment variables for all commands executed in the primary container
         environment:
           GITHUB_TEAM_NAME_SLUG: cloud-platform
-          APPLICATON_DEPLOY_NAME: demo-app
-          REPONAME: reference-app
     steps:
       - checkout
       - setup_remote_docker:
           docker_layer_caching: true
-      - run:
-          name: Run code tests
-          command: |
-            make codetest
       - run:
           name: Authenticate with cluster
           command: |
@@ -29,8 +18,6 @@ jobs:
             kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=${K8S_NAMESPACE}
             kubectl config use-context ${K8S_CLUSTER_NAME}
             kubectl --namespace=${K8S_NAMESPACE} get pods
-            helm --kube-context ${K8S_CLUSTER_NAME} --tiller-namespace ${K8S_NAMESPACE} --service-account circleci init --upgrade --wait
-            helm --kube-context ${K8S_CLUSTER_NAME} --tiller-namespace ${K8S_NAMESPACE} ls
       - run:
           name: Build application Docker image
           command: |
@@ -52,18 +39,3 @@ jobs:
               docker tag app "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${REPONAME}:latest"
               docker push "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${REPONAME}:latest"
             fi
-      - deploy:
-          name: Helm deployment
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "main" ]; then
-              helm upgrade --install ${APPLICATON_DEPLOY_NAME} ./helm_deploy/django-app/. \
-                            --kube-context ${K8S_CLUSTER_NAME} \
-                            --tiller-namespace=${K8S_NAMESPACE} \
-                            --namespace=${K8S_NAMESPACE} \
-                            --set image.repository=${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${REPONAME} \
-                            --set image.tag="latest" \
-                            --set deploy.host=${K8S_NAMESPACE}.apps.${K8S_CLUSTER_NAME} \
-                            --set tls.hosts=${K8S_NAMESPACE}.apps.${K8S_CLUSTER_NAME} \
-                            --wait
-            fi
-            kubectl --namespace=${K8S_NAMESPACE} get pods
