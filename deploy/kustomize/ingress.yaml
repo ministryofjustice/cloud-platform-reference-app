@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: go-wiki-app
+  namespace: jason-lab
+spec:
+  tls:
+  - hosts:
+    - kustomize-example.apps.live-1.cloud-platform.service.justice.gov.uk
+  rules:
+  - host: kustomize-example.apps.live-1.cloud-platform.service.justice.gov.uk
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: go-wiki-app
+          servicePort: 8082

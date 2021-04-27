@@ -1,0 +1,14 @@
+schemaVersion: 2.0.0
+
+fileExistenceTests:
+  - name: 'no go binary'
+    path: '/usr/bin/go'
+    shouldExist: false
+
+  - name: 'wiki'
+    path: '/app/wiki'
+    shouldExist: true
+
+metadataTest:
+  exposedPorts: ["8082"]
+  workdir: "/app"

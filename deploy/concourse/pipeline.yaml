@@ -1,0 +1,67 @@
+resources:
+- name: gowiki-repository
+  type: git
+  source:
+    uri: https://github.com/jasonBirchall/golang-reference-app.git
+    branch: master
+- name: tools-image
+  type: docker-image
+  source:
+    repository: gcr.io/k8s-skaffold/skaffold
+    tag: latest
+    #- name: gowiki
+    #  type: docker-image
+    #  source:
+    #    repository: registry.hub.docker.com/ministryofjustice/cloud-platform-gowiki
+    #    username: ((cloud-platform-environments-dockerhub.dockerhub_username))
+    #    password: ((cloud-platform-environments-dockerhub.dockerhub_access_token))
+
+groups: 
+- name: deploy
+  jobs: [deploy-application]
+
+jobs:
+
+- name: deploy-application
+  serial: true
+  plan:
+    - in_parallel:
+      - get: gowiki-repository
+        trigger: true
+      - get: tools-image
+    - task: build
+      image: tools-image
+      config:
+        platform: linux
+        inputs:
+          - name: gowiki-repository
+        outputs:
+          - name: build
+        params:
+          KUBECONFIG: "/tmp/kubconfig"
+          KUBESECRET: ((kubectl-conf.kubeconfig))
+        run:
+          path: /bin/bash
+          dir: gowiki-repository
+          args:
+            - -c
+            - |
+              printf "%s" "$${KUBESECRET}" >"$${KUBECONFIG}"
+              kubectl --kubeconfig "$${KUBECONFIG}" -n concourse-${github_team} get secret ${github_team}-gpg-seckey -ojson | jq -r '.data.key | @base64d' | gpg --batch --import
+              skaffold build --profile development
+
+    - task: deploy
+      image: tools-image
+      config:
+        platform: linux
+        inputs:
+          - name: gowiki-repository
+          - name: build
+        params:
+        run:
+          path: /bin/bash
+          dir: gowiki-repository
+          args:
+            - -c
+            - |
+              skaffold deploy --status-check --profile development
