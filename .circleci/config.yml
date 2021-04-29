@@ -3,8 +3,6 @@ jobs:
   build:
     docker:
       - image: ministryofjustice/cloud-platform-tools
-        environment:
-          REPONAME: demo-go-app
     steps:
       - checkout
       - setup_remote_docker:
@@ -28,8 +26,8 @@ jobs:
             login="$(AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION} AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID_DEMO} AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY_DEMO} aws ecr get-login --no-include-email)"
             ${login}
 
-            docker tag app "${ECR_ENDPOINT}/${REPONAME}:${CIRCLE_SHA1}"
-            docker push "${ECR_ENDPOINT}/${REPONAME}:${CIRCLE_SHA1}"
+            docker tag app "${ECR_ENDPOINT}:${CIRCLE_SHA1}"
+            docker push "${ECR_ENDPOINT}:${CIRCLE_SHA1}"
 
             if [ "${CIRCLE_BRANCH}" == "main" ]; then
               docker tag app "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${REPONAME}:latest"
