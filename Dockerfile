@@ -1,20 +1,27 @@
-FROM python:3.6-alpine
+# Dockerfile References: https://docs.docker.com/engine/reference/builder/
 
-RUN apk add --no-cache build-base bash make postgresql-client postgresql-dev
+# Start from the latest golang base image
+FROM golang:1.16
 
+# Set the Current Working Directory inside the container
+WORKDIR /app
 
-RUN addgroup -g 1000 -S appgroup && \
-    adduser -u 1000 -S appuser -G appgroup
+# Create a user and group for no root
+RUN useradd gowiki --uid 1000 -U -M
 
-ENV PROJECT_ROOT /app
-WORKDIR $PROJECT_ROOT
-
-COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
+# Copy the source from the current directory to the Working Directory inside the container
 COPY . .
 
-EXPOSE 8000
+# Build the Go app
+RUN go build -o main .
 
+# Expose port 8082 to the outside world
+EXPOSE 8082
+
+RUN chown -R gowiki:gowiki /app
+
+# Change user
 USER 1000
 
-CMD python3 ./manage.py runserver 0.0.0.0:8000
+# Command to run the executable
+CMD ["./wiki"]
