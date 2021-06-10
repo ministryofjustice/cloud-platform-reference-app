@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: golang-wiki
-  namespace: jason-lab
+  namespace: cloud-platform-reference-app
 spec:
   selector:
     matchLabels:
@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
       - name: golang-wiki
-        image: json0/go-reference-app
+        image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/webops/cloud-platform-reference-app-ecr:latest
         ports:
         - containerPort: 8082

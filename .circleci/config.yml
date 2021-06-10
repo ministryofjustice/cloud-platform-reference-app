@@ -33,3 +33,9 @@ jobs:
               docker tag app "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${REPONAME}:latest"
               docker push "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${REPONAME}:latest"
             fi
+      - deploy:
+          name: Apply in K8S CLUSTER
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "main" ]; then
+              kubectl -n ${K8S_NAMESPACE} apply -f deploy/kubectl/production/
+            fi
