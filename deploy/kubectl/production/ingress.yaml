@@ -2,13 +2,13 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: golang-wiki
-  namespace: jason-lab
+  namespace: cloud-platform-reference-app
 spec:
   tls:
   - hosts:
-    - skaffold-production.apps.live-1.cloud-platform.service.justice.gov.uk
+    - cp-reference-app.apps.live-1.cloud-platform.service.justice.gov.uk
   rules:
-  - host: skaffold-production.apps.live-1.cloud-platform.service.justice.gov.uk
+  - host: cp-reference-app.apps.live-1.cloud-platform.service.justice.gov.uk
     http:
       paths:
       - path: /

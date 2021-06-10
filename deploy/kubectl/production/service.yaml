@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: golang-wiki
-  namespace: jason-lab
+  namespace: cloud-platform-reference-app
   labels:
     app: golang-wiki
 spec:

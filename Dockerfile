@@ -13,7 +13,7 @@ RUN useradd gowiki --uid 1000 -U -M
 COPY . .
 
 # Build the Go app
-RUN go build -o main .
+RUN go build wiki.go
 
 # Expose port 8082 to the outside world
 EXPOSE 8082
