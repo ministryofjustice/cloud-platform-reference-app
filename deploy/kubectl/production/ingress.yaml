@@ -2,6 +2,9 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: golang-wiki
+  annotations:
+    external-dns.alpha.kubernetes.io/set-identifier: dns-live
+    external-dns.alpha.kubernetes.io/aws-weight: "50"
   namespace: cloud-platform-reference-app
 spec:
   tls:
@@ -15,3 +18,41 @@ spec:
         backend:
           serviceName: golang-wiki
           servicePort: 8082
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: golang-wiki-main
+  annotations:
+    external-dns.alpha.kubernetes.io/set-identifier: dns-live
+    external-dns.alpha.kubernetes.io/aws-weight: "50"
+  namespace: cloud-platform-reference-app
+spec:
+  tls:
+  - hosts:
+    - refapp.cloud-platform.service.justice.gov.uk
+    secretName: ref-app-ssl
+  rules:
+  - host: refapp.cloud-platform.service.justice.gov.uk
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: golang-wiki
+          servicePort: 8082
+
+---
+apiVersion: cert-manager.io/v1alpha3
+kind: Certificate
+metadata:
+  name: certificate-ref-app
+  namespace: cloud-platform-reference-app
+spec:
+  secretName: ref-app-ssl
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  dnsNames:
+  - refapp.cloud-platform.service.justice.gov.uk
