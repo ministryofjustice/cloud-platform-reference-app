@@ -28,7 +28,7 @@ metadata:
   namespace: ${KUBE_NAMESPACE}
   annotations:
     external-dns.alpha.kubernetes.io/set-identifier: cp-reference-app-migration
-    external-dns.alpha.kubernetes.io/aws-weight: "50"
+    external-dns.alpha.kubernetes.io/aws-weight: "0"
 spec:
   tls:
   - hosts:
