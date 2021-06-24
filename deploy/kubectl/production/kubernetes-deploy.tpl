@@ -26,6 +26,9 @@ kind: Ingress
 metadata:
   name: golang-wiki
   namespace: ${KUBE_NAMESPACE}
+  annotations:
+    external-dns.alpha.kubernetes.io/set-identifier: cp-reference-app-migration
+    external-dns.alpha.kubernetes.io/aws-weight: "50"
 spec:
   tls:
   - hosts:
