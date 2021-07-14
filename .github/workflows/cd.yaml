@@ -41,7 +41,6 @@ jobs:
           kubectl config set-credentials deploy-user --token=${{ secrets.KUBE_TOKEN }}
           kubectl config set-context ${KUBE_CLUSTER} --cluster=${KUBE_CLUSTER} --user=deploy-user --namespace=${{ secrets.KUBE_NAMESPACE }}
           kubectl config get-contexts
-          kubectl config current-context
           kubectl config use-context ${KUBE_CLUSTER}
       - name: Apply the updated manifest
         run: |
