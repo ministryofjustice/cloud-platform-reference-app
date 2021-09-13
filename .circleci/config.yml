@@ -25,7 +25,7 @@ jobs:
               docker push "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${REPONAME}:latest"
             fi
   
-  deploy_live_1_cluster:
+  deploy_to_live_1_cluster:
     docker:
       - image: ministryofjustice/cloud-platform-tools
     steps:
@@ -49,7 +49,7 @@ jobs:
               kubectl -n ${NAMESPACE} apply -f deploy/kubectl/live-1/
               fi
   
-  deploy_live_cluster:
+  deploy_to_live_cluster:
     docker:
       - image: ministryofjustice/cloud-platform-tools
     steps:
@@ -79,9 +79,9 @@ workflows:
   build-and-deploy:
     jobs:
       - build
-      - deploy_live_1_cluster:
+      - deploy_to_live_1_cluster:
           requires:
             - build
-      - deploy_live_cluster:
+      - deploy_to_live_cluster:
           requires:
             - build
