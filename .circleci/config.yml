@@ -82,6 +82,6 @@ workflows:
       - deploy_live_1_cluster:
           requires:
             - build
-      # - deploy_live_cluster:
-      #     requires:
-      #       - build
+      - deploy_live_cluster:
+          requires:
+            - build
