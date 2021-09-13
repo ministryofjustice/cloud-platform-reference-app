@@ -1,5 +1,5 @@
-IMAGE := json0/go-reference-app
-TAG := 1.3
+IMAGE := 754256621582.dkr.ecr.eu-west-2.amazonaws.com/webops/cloud-platform-reference-app-ecr
+TAG := latest
 
 docker-build: .built-docker-image
 
