@@ -1,12 +1,6 @@
 # Getting started on the MoJ Cloud Platform using CircleCI
 
 Continuous Deployment of an application using [CircleCI](https://user-guide.cloud-platform.service.justice.gov.uk/documentation/deploying-an-app/using-circleci-for-continuous-deployment.html#continuous-deployment-of-an-application-using-circleci-and-helm)
-
-## Table of contents
-
-   * [Building, tagging and pushing to ECR](#building,-tagging-and-pushing-to-ECR)
-   * [Authenticate and deploy applications](#authenticate-and-deploy-applications)
-
 ### Prerequisites
 
 * A cloud platform [namespace](https://user-guide.cloud-platform.service.justice.gov.uk/documentation/getting-started/env-create.html#creating-a-cloud-platform-environment)
