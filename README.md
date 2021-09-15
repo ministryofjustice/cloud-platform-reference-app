@@ -2,7 +2,7 @@
 
 Continuous Deployment of an application using [CircleCI](https://user-guide.cloud-platform.service.justice.gov.uk/documentation/deploying-an-app/using-circleci-for-continuous-deployment.html#continuous-deployment-of-an-application-using-circleci-and-helm)
 
-The CircleCI [config.yml](https://github.com/ministryofjustice/cloud-platform-reference-app/blob/main/.circleci/config.yml) file in this repository is configured to build an image and deploy to both the `live-1` and `live` clusters with a unique [ingress identifier](https://github.com/ministryofjustice/cloud-platform-reference-app/blob/73b021b36a0cfee9b7363a119db92597e398641c/deploy/kubectl/live-1/ingress.yaml#L6) for each cluster and a [Weighting](https://github.com/ministryofjustice/cloud-platform-reference-app/blob/73b021b36a0cfee9b7363a119db92597e398641c/deploy/kubectl/live-1/ingress.yaml#L7) of 50/50. 
+The [CircleCI config.yml](https://github.com/ministryofjustice/cloud-platform-reference-app/blob/main/.circleci/config.yml) file in this repository is configured to build an image and deploy to both the `live-1` and `live` clusters with a [unique ingress identifier](https://github.com/ministryofjustice/cloud-platform-reference-app/blob/73b021b36a0cfee9b7363a119db92597e398641c/deploy/kubectl/live-1/ingress.yaml#L6) for each cluster and a [weighting](https://github.com/ministryofjustice/cloud-platform-reference-app/blob/73b021b36a0cfee9b7363a119db92597e398641c/deploy/kubectl/live-1/ingress.yaml#L7) of 50/50. 
 The application is deployed using Kubernetes manifest files which can be found [HERE](https://github.com/ministryofjustice/cloud-platform-reference-app/tree/main/deploy/kubectl)
 
 ### Prerequisites
