@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: golang-wiki
   annotations:
-    external-dns.alpha.kubernetes.io/set-identifier: "golang-wiki-cloud-platform-reference-app-github-action-blue"
+    external-dns.alpha.kubernetes.io/set-identifier: "golang-wiki-cloud-platform-reference-app-green"
     external-dns.alpha.kubernetes.io/aws-weight: "50"
   namespace: cloud-platform-reference-app
 spec:

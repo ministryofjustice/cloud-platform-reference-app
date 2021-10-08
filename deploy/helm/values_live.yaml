@@ -38,7 +38,7 @@ service:
 ingress:
   enabled: true
   annotations:
-    external-dns.alpha.kubernetes.io/set-identifier: "golang-wiki-cloud-platform-reference-app-github-action-green"
+    external-dns.alpha.kubernetes.io/set-identifier: "golang-wiki-cloud-platform-reference-app-green"
     external-dns.alpha.kubernetes.io/aws-weight: "0"
   rules:
     host: cp-reference-app.apps.live-1.cloud-platform.service.justice.gov.uk
