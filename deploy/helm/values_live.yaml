@@ -4,14 +4,14 @@
 
 replicaCount: 3
 
-namespace: jason-lab
+namespace: cloud-platform-reference-app
 
 image:
-  repository: json0/go-reference-app:1.2
+  repository: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/webops/cloud-platform-reference-app-ecr:latest
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
-nameOverride: "gowiki"
+nameOverride: ""
 fullnameOverride: ""
 
 serviceAccount:
@@ -37,11 +37,11 @@ service:
 
 ingress:
   enabled: true
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+  annotations:
+    external-dns.alpha.kubernetes.io/set-identifier: "golang-wiki-cloud-platform-reference-app-green"
+    external-dns.alpha.kubernetes.io/aws-weight: "0"
   rules:
-    host: skaffold-example.apps.live-1.cloud-platform.service.justice.gov.uk
+    host: cp-reference-app.apps.live-1.cloud-platform.service.justice.gov.uk
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
