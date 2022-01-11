@@ -59,7 +59,7 @@ jobs:
       - run:
           name: Authenticate to LIVE cluster
           command: |
-            echo -n ${CLUSTER_CERT_LIVE} | base64 -d > ./live_ca.crt
+            echo -n ${CLUSTER_CERT_LIVE} > ./live_ca.crt
             kubectl config set-cluster ${CLUSTER_NAME_LIVE} --certificate-authority=./live_ca.crt --server=https://${CLUSTER_NAME_LIVE}
             kubectl config set-credentials circleci --token=${TOKEN_LIVE}
             kubectl config set-context ${CLUSTER_NAME_LIVE} --cluster=${CLUSTER_NAME_LIVE} --user=circleci --namespace=${NAMESPACE}
