@@ -25,30 +25,6 @@ jobs:
               docker push "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${REPONAME}:latest"
             fi
   
-  deploy_to_live_1_cluster:
-    docker:
-      - image: ministryofjustice/cloud-platform-tools
-    steps:
-      - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
-      - run:
-          name: Authenticate to LIVE-1 cluster
-          command: |
-            echo -n ${CLUSTER_CERT_LIVE_1} | base64 -d > ./live_1_ca.crt
-            kubectl config set-cluster ${CLUSTER_NAME_LIVE_1} --certificate-authority=./live_1_ca.crt --server=https://api.${CLUSTER_NAME_LIVE_1}
-            kubectl config set-credentials circleci --token=${TOKEN_LIVE_1}
-            kubectl config set-context ${CLUSTER_NAME_LIVE_1} --cluster=${CLUSTER_NAME_LIVE_1} --user=circleci --namespace=${NAMESPACE}
-            kubectl config use-context ${CLUSTER_NAME_LIVE_1}
-            kubectl config current-context
-            kubectl --namespace=${NAMESPACE} get pods
-      - deploy:
-          name: Apply in LIVE-1 Cluster
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "main" ]; then
-              kubectl -n ${NAMESPACE} apply -f deploy/kubectl/live-1/
-              fi
-  
   deploy_to_live_cluster:
     docker:
       - image: ministryofjustice/cloud-platform-tools
@@ -73,15 +49,11 @@ jobs:
               kubectl -n ${NAMESPACE} apply -f deploy/kubectl/live/
             fi
 
-
 workflows:
   version: 2
   build-and-deploy:
     jobs:
       - build
-      - deploy_to_live_1_cluster:
-          requires:
-            - build
       - deploy_to_live_cluster:
           requires:
             - build

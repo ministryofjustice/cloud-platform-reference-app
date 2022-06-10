@@ -1,21 +1,23 @@
-apiVersion: extensions/v1beta1
+apiVersion: extensions/v1
 kind: Ingress
 metadata:
   name: golang-wiki
   annotations:
     external-dns.alpha.kubernetes.io/set-identifier: "golang-wiki-cloud-platform-reference-app-green"
-    external-dns.alpha.kubernetes.io/aws-weight: "50"
+    external-dns.alpha.kubernetes.io/aws-weight: "100"
   namespace: cloud-platform-reference-app
 spec:
   tls:
   - hosts:
-    - cp-reference-app.apps.live-1.cloud-platform.service.justice.gov.uk
+    - cp-reference-app.apps.live.cloud-platform.service.justice.gov.uk
   rules:
-  - host: cp-reference-app.apps.live-1.cloud-platform.service.justice.gov.uk
+  - host: cp-reference-app.apps.live.cloud-platform.service.justice.gov.uk
     http:
       paths:
       - path: /
+        pathType: ImplementationSpecific
         backend:
-          serviceName: golang-wiki
-          servicePort: 8082
-
+          service:
+            name: golang-wiki
+            port: 
+              number: 8082
