@@ -54,9 +54,6 @@ workflows:
   build-and-deploy:
     jobs:
       - build
-      - deploy_to_live_1_cluster:
-          requires:
-            - build
       - deploy_to_live_cluster:
           requires:
             - build
