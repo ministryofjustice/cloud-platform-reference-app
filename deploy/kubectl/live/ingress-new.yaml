@@ -1,12 +1,13 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: golang-wiki
+  name: golang-wiki-new
   annotations:
-    external-dns.alpha.kubernetes.io/set-identifier: "golang-wiki-cloud-platform-reference-app-green"
+    external-dns.alpha.kubernetes.io/set-identifier: "golang-wiki-new-cloud-platform-reference-app-green"
     external-dns.alpha.kubernetes.io/aws-weight: "100"
   namespace: cloud-platform-reference-app
 spec:
+  ingressClassName: default
   tls:
   - hosts:
     - cp-reference-app.apps.live.cloud-platform.service.justice.gov.uk
