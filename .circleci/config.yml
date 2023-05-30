@@ -38,12 +38,12 @@ jobs:
             kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=${NAMESPACE}
             kubectl config use-context ${K8S_CLUSTER_NAME}
             kubectl config current-context
-            kubectl --namespace=${NAMESPACE} get pods
+            kubectl --namespace=${K8S_NAMESPACE} get pods
       - deploy:
           name: Apply in LIVE CLUSTER
           command: |
             if [ "${CIRCLE_BRANCH}" == "main" ]; then
-              kubectl -n ${NAMESPACE} apply -f deploy/kubectl/live/
+              kubectl -n ${K8S_NAMESPACE} apply -f deploy/kubectl/live/
             fi
 
 workflows:
